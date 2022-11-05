@@ -1,8 +1,9 @@
-import React from "react";
-import { Input, Segmented, Button } from "antd";
+import React from "react"
+import { Input, Segmented, Button, Checkbox, Form } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
 import ModalComponent from "../../components/Modal";
+import AuthForm from "../../components/forms/AuthFrom";
 
 const ButtonAuth = ({ onChange }: any) => {
   return (
@@ -19,6 +20,7 @@ const ButtonAuth = ({ onChange }: any) => {
 };
 
 const UserDateForm: React.FC = () => {
+
   return (
     <div>
       <div className={classes.header}>
@@ -36,7 +38,7 @@ const UserDateForm: React.FC = () => {
       </div>
       <div className={classes.buttonBlock}>
         <ModalComponent title="Авторизация" buttonName="Авторизоваться">
-          <div>FORM</div>
+          <AuthForm />
         </ModalComponent>
         <Button size="large" className={classes.button} block type="primary">
           Зарегистрироваться

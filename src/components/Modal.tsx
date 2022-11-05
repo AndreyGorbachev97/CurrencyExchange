@@ -6,7 +6,7 @@ import { Button, Modal } from "antd";
 type propType = {
   title: string;
   buttonName: string;
-  children: React.ReactNode;
+  children: any;
 };
 
 const ModalComponent: React.FC<propType> = ({
@@ -42,10 +42,10 @@ const ModalComponent: React.FC<propType> = ({
       <Modal
         title={title}
         open={isModalOpen}
-        onOk={handleOk}
+        footer={null}
         onCancel={handleCancel}
       >
-        {children}
+        {React.cloneElement(children, { handleCancel })}
       </Modal>
     </>
   );
