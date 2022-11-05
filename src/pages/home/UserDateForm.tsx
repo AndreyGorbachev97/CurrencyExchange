@@ -2,6 +2,21 @@ import React from "react";
 import { Input, Segmented, Button } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
+import ModalComponent from "../../components/Modal";
+
+const ButtonAuth = ({ onChange }: any) => {
+  return (
+    <Button
+      size="large"
+      onClick={onChange}
+      className={classes.button}
+      block
+      type="primary"
+    >
+      Авторизоваться
+    </Button>
+  );
+};
 
 const UserDateForm: React.FC = () => {
   return (
@@ -20,9 +35,9 @@ const UserDateForm: React.FC = () => {
         </div>
       </div>
       <div className={classes.buttonBlock}>
-        <Button size="large" className={classes.button} block type="primary">
-          Авторизоваться
-        </Button>
+        <ModalComponent title="Авторизация" buttonName="Авторизоваться">
+          <div>FORM</div>
+        </ModalComponent>
         <Button size="large" className={classes.button} block type="primary">
           Зарегистрироваться
         </Button>

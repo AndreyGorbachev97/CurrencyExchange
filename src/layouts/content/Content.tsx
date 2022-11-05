@@ -8,10 +8,7 @@ interface propType {
 const Content = ({ children }: propType) => {
   return (
     <div className={classes.container}>
-      <div className={classes.content}>
-        Content
-        {children}
-      </div>
+      <div className={classes.content}>{children}</div>
     </div>
   );
 };

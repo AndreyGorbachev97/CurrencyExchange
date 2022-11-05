@@ -9,16 +9,16 @@ const RouterApp = () => {
   return (
     <div>
       <Header />
-      <div>
+      {/* <div>
         <nav>
           <Link to="/">Post</Link> | <Link to="/home">Home</Link>
         </nav>
-      </div>
+      </div> */}
       <Content>
         <Routes>
-          <Route path="/" element={<Post />} />
+          {/* <Route path="/" element={<Post />} /> */}
           <Route path="/home" element={<Home />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </Content>
     </div>
