@@ -33,7 +33,6 @@ const GiveCurrency: React.FC<propType> = ({ tags, getCurrency, setGiveCurrency }
 
   const onChangeItem = (item: Item) => {
     setActive(item)
-    console.log("item", item)
     if (item.name) {
       setGiveCurrency({ name: item.name || item.type, value: currency, type: item.type })
     }

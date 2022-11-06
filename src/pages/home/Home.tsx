@@ -37,14 +37,8 @@ const Home: React.FC = () => {
     setGetTags(mapTags);
     if (item.type === getCurrency.type) {
       setGetCurrency(initCurrency);
-      // setGiveTags(tags)
     }
     setGiveCurrency(item);
-    // setCourse(
-    //   giveCurrency.type === "rub"
-    //     ? (+priceCurrency.price * 65).toFixed(5)
-    //     : (+priceCurrency.price).toFixed(5)
-    // );
   };
 
   const changeGetCurrency = (item: ICurrency) => {
@@ -55,16 +49,10 @@ const Home: React.FC = () => {
       return tag;
     });
     setGiveTags(mapTags);
-    if (item.type === getCurrency.type) {
+    if (item.type === giveCurrency.type) {
       setGiveCurrency(initCurrency);
-      // setGetTags(tags)
     }
     setGetCurrency(item);
-    // setCourse(
-    //   getCurrency.type === "rub"
-    //     ? (+priceCurrency.price * 65).toFixed(5)
-    //     : (+priceCurrency.price).toFixed(5)
-    // );
   };
 
   useEffect(() => {

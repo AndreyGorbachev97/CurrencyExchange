@@ -6,8 +6,6 @@ import { currencies, ITag, Item } from "./constants";
 
 const { Search } = Input;
 
-const items = ["Ethereum", "Ethereum", "Ethereum", "Ethereum", "Ethereum"];
-
 type propType = {
   giveCurrency: ICurrency;
   setGetCurrency: (value: ICurrency) => void;
@@ -32,9 +30,7 @@ const GetCurrency: React.FC<propType> = ({
       : giveCurrency.value / +course || 0
   ).toFixed(5);
 
-  console.log("amount", amount);
   useEffect(() => {
-    console.log("giveCurrency.type", giveCurrency);
     setList(currencies.filter((item: any) => item.type !== giveCurrency.type));
   }, [giveCurrency]);
 
