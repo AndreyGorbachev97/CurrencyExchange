@@ -4,6 +4,7 @@ import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
 import ModalComponent from "../../components/Modal";
 import AuthForm from "../../components/forms/AuthFrom";
+import RegisterFrom from "../../components/forms/RegisterFrom";
 import { ICurrency } from "../../interfaces/currency";
 
 const ButtonAuth = ({ onChange }: any) => {
@@ -65,9 +66,9 @@ const UserDateForm: React.FC<propType> = ({
         <ModalComponent title="Авторизация" buttonName="Авторизоваться">
           <AuthForm />
         </ModalComponent>
-        <Button size="large" className={classes.button} block type="primary">
-          Зарегистрироваться
-        </Button>
+        <ModalComponent title="Регистрация" buttonName="Зарегистрироваться">
+          <RegisterFrom />
+        </ModalComponent>
       </div>
     </div>
   );

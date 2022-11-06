@@ -1,12 +1,21 @@
 import React from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { auth } from "../../store/reducers/ActionCreators";
 
 type propType = {
   handleCancel: () => void;
 };
 const AuthForm: React.FC = ({ handleCancel }: propType) => {
+
+  const dispatch = useAppDispatch();
+  const { auth: data, isLoading, error } = useAppSelector(
+    (state) => state.authReducer
+  );
+  
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    dispatch(auth(values))
   };
 
   const onFinishFailed = (errorInfo: any) => {
