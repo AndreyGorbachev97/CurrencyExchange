@@ -1,124 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Segmented, InputNumber } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
-import qiwi from "../../assets/images/banks/qiwi.svg";
-import zenit from "../../assets/images/banks/zenit.svg";
-import tochka from "../../assets/images/banks/tochka.svg";
-import tinkoff from "../../assets/images/banks/tinkoff.svg";
-import sber from "../../assets/images/banks/sber.svg";
-import btc from "../../assets/images/coins/btc.png";
-import doge from "../../assets/images/coins/doge.png";
-import eth from "../../assets/images/coins/eth.png";
-import ltc from "../../assets/images/coins/ltc.png";
-import xmr from "../../assets/images/coins/xmr.png";
 import { ICurrency } from "../../interfaces/currency";
+import { currencies, ITag, Item } from "./constants";
 
 const { Search } = Input;
 
-type Item = {
-  title: string;
-  img?: string;
-  type: string;
-  name?: string;
-}
-const items: Item[] = [
-  {
-    title: "Ethereum",
-    img: eth,
-    type: "coin",
-    name: "ETH",
-  },
-  {
-    title: "Litecoin",
-    img: ltc,
-    type: "coin",
-    name: "LTC",
-  },
-  {
-    title: "Monero",
-    img: xmr,
-    type: "coin",
-    name: "XMR",
-  },
-  {
-    title: "Doge",
-    img: doge,
-    type: "coin",
-    name: "DOGE",
-  },
-  {
-    title: "Bitcoin",
-    img: btc,
-    type: "coin",
-    name: "BTC",
-  },
-  {
-    title: "Qiwi",
-    img: qiwi,
-    type: "usd",
-  },
-  {
-    title: "Банк Зенит",
-    img: zenit,
-    type: "rub",
-  },
-  {
-    title: "Точка",
-    img: tochka,
-    type: "rub",
-  },
-  {
-    title: "Tinkoff",
-    img: tinkoff,
-    type: "rub",
-  },
-  {
-    title: "Sber",
-    img: sber,
-    type: "rub",
-  },
-]
 
 type propType = {
-  giveCurrency: ICurrency;
+  getCurrency: ICurrency;
   setGiveCurrency: (value: ICurrency) => void;
+  tags: ITag[]
 }
 
-const GiveCurrency: React.FC<propType> = ({ giveCurrency, setGiveCurrency }: propType) => {
+const GiveCurrency: React.FC<propType> = ({ tags, getCurrency, setGiveCurrency }: propType) => {
   const [type, setType] = useState("all");
   const [active, setActive] = useState(null);
-  const [list, setList] = useState(items);
+  const [list, setList] = useState(currencies);
   const [currency, setCurrency] = useState(0);
+
+  useEffect(() => {
+    setList(currencies.filter((item: any) => item.type !== getCurrency.type))
+  }, [getCurrency])
 
   const onChangeCurrency = (value: number) => {
     setCurrency(value)
     if (active?.name) {
-      setGiveCurrency({ name: active.name, value })
+      setGiveCurrency({ name: active.name, value, type: active.type })
     }
-
   }
 
   const onChangeItem = (item: Item) => {
     setActive(item)
-    if (item.name && currency) {
-      setGiveCurrency({ name: item.name || item.type, value: currency })
+    console.log("item", item)
+    if (item.name) {
+      setGiveCurrency({ name: item.name || item.type, value: currency, type: item.type })
     }
   }
 
   const onSearchValue = (value: string) => {
     setType("")
-    setList(items.filter((item: Item) => item.title.toLowerCase().includes(value.toLowerCase())))
+    setList(currencies.filter((item: Item) => item.title.toLowerCase().includes(value.toLowerCase())))
   };
 
   const onSearchType = (type: string) => {
     setType(type)
     if (type === "all") {
-      setList(items)
+      setList(currencies)
     } else {
-      setList(items.filter((item: Item) => item.type === type))
+      setList(currencies.filter((item: Item) => item.type === type))
     }
-
   };
 
   return (
@@ -140,14 +72,7 @@ const GiveCurrency: React.FC<propType> = ({ giveCurrency, setGiveCurrency }: pro
           block
           onChange={onSearchType}
           value={type}
-          options={[
-            { label: "Все", value: "all", disabled: false },
-            { label: "COIN", value: "coin", disabled: false },
-            { label: "KZT", value: "kzt", disabled: true },
-            { label: "USD", value: "usd", disabled: false },
-            { label: "RUB", value: "rub", disabled: false },
-            { label: "UAH", value: "uah", disabled: true },
-          ]}
+          options={tags}
         />
       </div>
 
