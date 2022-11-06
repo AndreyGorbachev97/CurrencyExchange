@@ -17,8 +17,8 @@ const RouterApp = () => {
       <Content>
         <Routes>
           {/* <Route path="/" element={<Post />} /> */}
-          <Route path="/home" element={<Home />} />
-          <Route path="*" element={<Navigate to="/home" replace />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Content>
     </div>

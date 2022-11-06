@@ -1,9 +1,10 @@
-import React from "react"
+import React from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
 import ModalComponent from "../../components/Modal";
 import AuthForm from "../../components/forms/AuthFrom";
+import { ICurrency } from "../../interfaces/currency";
 
 const ButtonAuth = ({ onChange }: any) => {
   return (
@@ -19,7 +20,23 @@ const ButtonAuth = ({ onChange }: any) => {
   );
 };
 
-const UserDateForm: React.FC = () => {
+type propType = {
+  course: string;
+  giveCurrency: ICurrency;
+  getCurrency: ICurrency;
+};
+
+const UserDateForm: React.FC<propType> = ({
+  course,
+  giveCurrency,
+  getCurrency,
+}: propType) => {
+  let coin = getCurrency;
+  let price = giveCurrency;
+  if (giveCurrency.type === "coin") {
+    coin = giveCurrency;
+    price = getCurrency;
+  }
 
   return (
     <div>
@@ -27,8 +44,16 @@ const UserDateForm: React.FC = () => {
         <div>Курс</div>
       </div>
       <div className={classes.exchangeRates}>
-        <span className={classes.smallText}>Обмен по курсу: </span>
-        <span className={classes.middleText}>1 DOGE = 4.89 RUB</span>
+        {giveCurrency.name && getCurrency.name ? (
+          <>
+            <span className={classes.smallText}>Обмен по курсу: </span>
+            <span className={classes.middleText}>{`1 ${
+              coin.name
+            } = ${course} ${price.type.toUpperCase()}`}</span>
+          </>
+        ) : (
+          <span className={classes.middleText}>Выберите вариант обмена.</span>
+        )}
       </div>
       <div className={classes.infoBlock}>
         <div className={classes.smallText}>

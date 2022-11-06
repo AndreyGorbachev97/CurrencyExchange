@@ -1,18 +1,16 @@
-import React from 'react';
+import React from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
-
 
 type propType = {
   handleCancel: () => void;
-}
+};
 const AuthForm: React.FC = ({ handleCancel }: propType) => {
-
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   return (
@@ -28,7 +26,7 @@ const AuthForm: React.FC = ({ handleCancel }: propType) => {
         <Form.Item
           label="Логин"
           name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true, message: "Введите логин" }]}
         >
           <Input />
         </Form.Item>
@@ -36,7 +34,7 @@ const AuthForm: React.FC = ({ handleCancel }: propType) => {
         <Form.Item
           label="Пароль"
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: "Введите пароль" }]}
         >
           <Input.Password />
         </Form.Item>
@@ -45,12 +43,13 @@ const AuthForm: React.FC = ({ handleCancel }: propType) => {
           <Button type="primary" htmlType="submit">
             Авторизоваться
           </Button>
-          <Button style={{ marginLeft: '8px' }} onClick={handleCancel}>
+          <Button style={{ marginLeft: "8px" }} onClick={handleCancel}>
             Назад
           </Button>
         </Form.Item>
-      </Form></div>
-  )
-}
+      </Form>
+    </div>
+  );
+};
 
 export default AuthForm;

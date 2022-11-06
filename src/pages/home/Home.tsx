@@ -7,76 +7,107 @@ import { ICurrency } from "../../interfaces/currency";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchPriceCurrency } from "../../store/reducers/ActionCreators";
 import { ITag, tags } from "./constants";
+import { IPriceCurrency } from "../../models/IPriceCurrency";
 
 const Home: React.FC = () => {
-
   const initCurrency: ICurrency = {
     name: "",
     value: 0,
     type: "",
-  }
+  };
 
   const [giveCurrency, setGiveCurrency] = useState(initCurrency);
   const [getCurrency, setGetCurrency] = useState(initCurrency);
   const [giveTags, setGiveTags] = useState(tags);
   const [getTags, setGetTags] = useState(tags);
+  const [course, setCourse] = useState(null);
 
-  // const getCurrencyAmount = giveCurrency.value()
+  const dispatch = useAppDispatch();
+  const { priceCurrency, isLoading, error } = useAppSelector(
+    (state) => state.priceCurrencyReducer
+  );
 
   const changeGiveCurrency = (item: ICurrency) => {
     const mapTags = tags.map((tag: ITag) => {
       if (tag.value.toUpperCase() === item.type.toUpperCase()) {
-        return { ...tag, disabled: true }
+        return { ...tag, disabled: true };
       }
       return tag;
-    })
-    console.log("mapTags", mapTags)
-    setGetTags(mapTags)
+    });
+    setGetTags(mapTags);
     if (item.type === getCurrency.type) {
-      setGetCurrency(initCurrency)
+      setGetCurrency(initCurrency);
       // setGiveTags(tags)
     }
-    setGiveCurrency(item)
-
-  }
+    setGiveCurrency(item);
+    // setCourse(
+    //   giveCurrency.type === "rub"
+    //     ? (+priceCurrency.price * 65).toFixed(5)
+    //     : (+priceCurrency.price).toFixed(5)
+    // );
+  };
 
   const changeGetCurrency = (item: ICurrency) => {
     const mapTags = tags.map((tag: ITag) => {
       if (tag.value.toUpperCase() === item.type.toUpperCase()) {
-        return { ...tag, disabled: true }
+        return { ...tag, disabled: true };
       }
       return tag;
-    })
-    setGiveTags(mapTags)
+    });
+    setGiveTags(mapTags);
     if (item.type === getCurrency.type) {
-      setGiveCurrency(initCurrency)
+      setGiveCurrency(initCurrency);
       // setGetTags(tags)
     }
-    setGetCurrency(item)
-  }
-  console.log("giveCurrency", giveCurrency)
-
-  const dispatch = useAppDispatch()
-  const { priceCurrency, isLoading, error } = useAppSelector(state => state.priceCurrencyReducer)
+    setGetCurrency(item);
+    // setCourse(
+    //   getCurrency.type === "rub"
+    //     ? (+priceCurrency.price * 65).toFixed(5)
+    //     : (+priceCurrency.price).toFixed(5)
+    // );
+  };
 
   useEffect(() => {
     if (giveCurrency.name && getCurrency.name) {
-      dispatch(fetchPriceCurrency(giveCurrency.type === "coin" ? giveCurrency.name : getCurrency.name))
+      dispatch(
+        fetchPriceCurrency(
+          giveCurrency.type === "coin" ? giveCurrency.name : getCurrency.name
+        )
+      );
     }
-  }, [giveCurrency.name, getCurrency.name])
+  }, [giveCurrency.name, getCurrency.name]);
 
-  console.log("priceCurrency", priceCurrency)
+  useEffect(() => {
+    setCourse(
+      getCurrency.type === "rub" || giveCurrency.type === "rub"
+        ? (+priceCurrency.price * 65).toFixed(5)
+        : (+priceCurrency.price).toFixed(5)
+    );
+  }, [priceCurrency]);
 
   return (
     <div className={classes.container}>
       <div className={classes.itemContainer}>
-        <GiveCurrency tags={giveTags} getCurrency={getCurrency} setGiveCurrency={changeGiveCurrency} />
+        <GiveCurrency
+          tags={giveTags}
+          getCurrency={getCurrency}
+          setGiveCurrency={changeGiveCurrency}
+        />
       </div>
       <div className={classes.itemContainer}>
-        <GetCurrency tags={getTags} giveCurrency={giveCurrency} setGetCurrency={changeGetCurrency} />
+        <GetCurrency
+          course={course}
+          tags={getTags}
+          giveCurrency={giveCurrency}
+          setGetCurrency={changeGetCurrency}
+        />
       </div>
       <div className={classes.itemContainer}>
-        <UserDateForm />
+        <UserDateForm
+          course={course}
+          giveCurrency={giveCurrency}
+          getCurrency={getCurrency}
+        />
       </div>
     </div>
   );
