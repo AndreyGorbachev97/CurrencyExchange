@@ -1,7 +1,8 @@
-import React from "react";
-import { Input, Segmented, Button, Checkbox, Form } from "antd";
+import React, { useEffect } from "react";
+import { Input, Segmented, Button, Checkbox, Form, Alert, Spin } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { register } from "../../store/reducers/ActionCreators";
+import classes from "./Form.module.css";
 
 type propType = {
   handleCancel: () => void;
@@ -10,10 +11,10 @@ type propType = {
 const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
   const dispatch = useAppDispatch();
   const {
-    auth: data,
+    register: data,
     isLoading,
     error,
-  } = useAppSelector((state) => state.authReducer);
+  } = useAppSelector((state) => state.registerReducer);
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -23,6 +24,11 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
+  useEffect(() => {
+    console.log("DATA", data);
+    data && handleCancel();
+  }, [data]);
 
   return (
     <div>
@@ -60,7 +66,19 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
         <Form.Item
           label="Пароль"
           name="password"
-          rules={[{ required: true, message: "Введите пароль" }]}
+          rules={[
+            { required: true, message: "Введите пароль" },
+            () => ({
+              validator(_, value) {
+                if (value.length > 8) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("Пароль должен быть не менее 8 символов!")
+                );
+              },
+            }),
+          ]}
         >
           <Input.Password />
         </Form.Item>
@@ -73,7 +91,7 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Повторите пароль",
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -87,14 +105,17 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
         >
           <Input.Password />
         </Form.Item>
-
+        {isLoading && <Spin />}
+        {!isLoading && error && <Alert message={error} type="error" showIcon />}
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Зарегистрироваться
-          </Button>
-          <Button style={{ marginLeft: "8px" }} onClick={handleCancel}>
-            Назад
-          </Button>
+          <div className={classes.footerForm}>
+            <Button type="primary" htmlType="submit">
+              Зарегистрироваться
+            </Button>
+            <Button style={{ marginLeft: "8px" }} onClick={handleCancel}>
+              Назад
+            </Button>
+          </div>
         </Form.Item>
       </Form>
     </div>

@@ -1,26 +1,33 @@
-import React from "react";
-import { Input, Segmented, Button, Checkbox, Form } from "antd";
+import React, { useEffect } from "react";
+import { Input, Segmented, Button, Checkbox, Form, Alert, Spin } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { auth } from "../../store/reducers/ActionCreators";
+import classes from "./Form.module.css";
 
 type propType = {
   handleCancel: () => void;
 };
 const AuthForm: React.FC = ({ handleCancel }: propType) => {
-
   const dispatch = useAppDispatch();
-  const { auth: data, isLoading, error } = useAppSelector(
-    (state) => state.authReducer
-  );
-  
+  const {
+    auth: data,
+    isLoading,
+    error,
+  } = useAppSelector((state) => state.authReducer);
+
+  console.log("error", error);
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    dispatch(auth(values))
+    dispatch(auth(values));
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+
+  useEffect(() => {
+    data && handleCancel();
+  }, [data]);
 
   return (
     <div>
@@ -47,14 +54,17 @@ const AuthForm: React.FC = ({ handleCancel }: propType) => {
         >
           <Input.Password />
         </Form.Item>
-
+        {isLoading && <Spin />}
+        {!isLoading && error && <Alert message={error} type="error" showIcon />}
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Авторизоваться
-          </Button>
-          <Button style={{ marginLeft: "8px" }} onClick={handleCancel}>
-            Назад
-          </Button>
+          <div className={classes.footerForm}>
+            <Button type="primary" htmlType="submit">
+              Авторизоваться
+            </Button>
+            <Button style={{ marginLeft: "8px" }} onClick={handleCancel}>
+              Назад
+            </Button>
+          </div>
         </Form.Item>
       </Form>
     </div>
