@@ -25,12 +25,14 @@ type propType = {
   course: string;
   giveCurrency: ICurrency;
   getCurrency: ICurrency;
+  auth: any; //исправить
 };
 
 const UserDateForm: React.FC<propType> = ({
   course,
   giveCurrency,
   getCurrency,
+  auth,
 }: propType) => {
   let coin = getCurrency;
   let price = giveCurrency;
@@ -56,20 +58,29 @@ const UserDateForm: React.FC<propType> = ({
           <span className={classes.middleText}>Выберите вариант обмена.</span>
         )}
       </div>
-      <div className={classes.infoBlock}>
-        <div className={classes.smallText}>
-          Для совершения обмена, необходимо зарегистрироваться или
-          авторизоваться.
-        </div>
-      </div>
-      <div className={classes.buttonBlock}>
-        <ModalComponent title="Авторизация" buttonName="Авторизоваться">
-          <AuthForm />
-        </ModalComponent>
-        <ModalComponent title="Регистрация" buttonName="Зарегистрироваться">
-          <RegisterFrom />
-        </ModalComponent>
-      </div>
+      {auth && (
+        <div
+          className={classes.exchangeRates}
+        >{`Вы успешно авторизованы ${auth.username}`}</div>
+      )}
+      {!auth && (
+        <>
+          <div className={classes.infoBlock}>
+            <div className={classes.smallText}>
+              Для совершения обмена, необходимо зарегистрироваться или
+              авторизоваться.
+            </div>
+          </div>
+          <div className={classes.buttonBlock}>
+            <ModalComponent title="Авторизация" buttonName="Авторизоваться">
+              <AuthForm />
+            </ModalComponent>
+            <ModalComponent title="Регистрация" buttonName="Зарегистрироваться">
+              <RegisterFrom />
+            </ModalComponent>
+          </div>
+        </>
+      )}
     </div>
   );
 };
