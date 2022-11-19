@@ -70,7 +70,7 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
             { required: true, message: "Введите пароль" },
             () => ({
               validator(_, value) {
-                if (value.length > 8) {
+                if (value.length >= 8) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
