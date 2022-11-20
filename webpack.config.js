@@ -2,11 +2,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+module.exports = (env) => ({
   entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    clean: true,
   },
   // target: ["web", "es5"],
   devServer: {
@@ -15,6 +16,8 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
+  devtool: env.production ? "source-map" : "eval-source-map",
+  mode: env.production ? "production" : "development",
   module: {
     strictExportPresence: true, // Включаем строгий режим, чтобы попытка импортировать несуществующие объекты приводила к падению билда
     rules: [
@@ -45,7 +48,10 @@ module.exports = {
       },
       {
         test: /\.(jpg|jpeg|png|svg)/,
-        type: 'asset/resource'
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][ext]',
+        },
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -81,4 +87,4 @@ module.exports = {
   {
     extensions: ['.tsx', '.ts', '.js'],
   }
-}
+})
