@@ -5,6 +5,7 @@ import Content from "../layouts/content/Content";
 import Header from "../layouts/header/Header";
 import Home from "../pages/home/Home";
 import Sidebar from "../layouts/sidebar/Sidebar";
+import Chat from "../components/chat/Chat";
 
 const RouterApp = () => {
   const { auth, isLoading, error } = useAppSelector(
@@ -15,6 +16,7 @@ const RouterApp = () => {
     <div>
       <Header />
       {auth && <Sidebar />}
+      <Chat/>
       <Content>
         <Routes>
           {/* <Route path="/" element={<Post />} /> */}

@@ -7,48 +7,59 @@ import { currencies, ITag, Item } from "./constants";
 
 const { Search } = Input;
 
-
 type propType = {
   getCurrency: ICurrency;
   setGiveCurrency: (value: ICurrency) => void;
-  tags: ITag[]
-}
+  tags: ITag[];
+};
 
-const GiveCurrency: React.FC<propType> = ({ tags, getCurrency, setGiveCurrency }: propType) => {
+const GiveCurrency: React.FC<propType> = ({
+  tags,
+  getCurrency,
+  setGiveCurrency,
+}: propType) => {
   const [type, setType] = useState("all");
   const [active, setActive] = useState(null);
   const [list, setList] = useState(currencies);
   const [currency, setCurrency] = useState(0);
 
   useEffect(() => {
-    setList(currencies.filter((item: any) => item.type !== getCurrency.type))
-  }, [getCurrency])
+    setList(currencies.filter((item: any) => item.type !== getCurrency.type));
+  }, [getCurrency]);
 
   const onChangeCurrency = (value: number) => {
-    setCurrency(value)
+    setCurrency(value);
     if (active?.name) {
-      setGiveCurrency({ name: active.name, value, type: active.type })
+      setGiveCurrency({ name: active.name, value, type: active.type });
     }
-  }
+  };
 
   const onChangeItem = (item: Item) => {
-    setActive(item)
+    setActive(item);
     if (item.name) {
-      setGiveCurrency({ name: item.name || item.type, value: currency, type: item.type })
+      setGiveCurrency({
+        name: item.name || item.type,
+        value: currency,
+        type: item.type,
+      });
     }
-  }
+  };
 
   const onSearchValue = (value: string) => {
-    setType("")
-    setList(currencies.filter((item: Item) => item.title.toLowerCase().includes(value.toLowerCase())))
+    setType("");
+    setList(
+      currencies.filter((item: Item) =>
+        item.title.toLowerCase().includes(value.toLowerCase())
+      )
+    );
   };
 
   const onSearchType = (type: string) => {
-    setType(type)
+    setType(type);
     if (type === "all") {
-      setList(currencies)
+      setList(currencies);
     } else {
-      setList(currencies.filter((item: Item) => item.type === type))
+      setList(currencies.filter((item: Item) => item.type === type));
     }
   };
 
@@ -61,7 +72,7 @@ const GiveCurrency: React.FC<propType> = ({ tags, getCurrency, setGiveCurrency }
       <InputNumber
         className={classes.inputCurrency}
         size="large"
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
         placeholder="Сумма"
         onChange={(value: number) => onChangeCurrency(value)}
         addonAfter={active?.name || active?.type.toUpperCase() || "Ед."}
@@ -72,36 +83,43 @@ const GiveCurrency: React.FC<propType> = ({ tags, getCurrency, setGiveCurrency }
           onChange={onSearchType}
           value={type}
           options={tags}
+          onResize={undefined}
+          onResizeCapture={undefined}
         />
       </div>
 
-      <Search placeholder="Поиск валюты..." allowClear onSearch={onSearchValue} />
+      <Search
+        placeholder="Поиск валюты..."
+        allowClear
+        onSearch={onSearchValue}
+      />
 
       <div className={`${classes.listHeader} ${classes.smallText}`}>
         Выберите валюту:
       </div>
       <div className={classes.list}>
-
         {list.map((el, key) => (
           <div
             key={el.title}
-            className={`${active?.title === el.title
-              ? classes.middleText +
-              " " +
-              classes.listItem +
-              " " +
-              classes.listItemActive
-              : classes.middleText + " " + classes.listItem
-              }`}
+            className={`${
+              active?.title === el.title
+                ? classes.middleText +
+                  " " +
+                  classes.listItem +
+                  " " +
+                  classes.listItemActive
+                : classes.middleText + " " + classes.listItem
+            }`}
             onClick={() => onChangeItem(el)}
           >
             <div
-              className={`${active?.title === el.title
-                ? classes.listContainerItem +
-                " " +
-                classes.listItemContainerActive
-                : classes.listContainerItem
-                }`}
+              className={`${
+                active?.title === el.title
+                  ? classes.listContainerItem +
+                    " " +
+                    classes.listItemContainerActive
+                  : classes.listContainerItem
+              }`}
             >
               <div className={classes.listItemIcon}>
                 <img src={el.img} alt={el.type} />
