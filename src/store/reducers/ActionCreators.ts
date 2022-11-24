@@ -2,6 +2,7 @@ import { AppDispatch } from "../";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IPriceCurrency } from "../../models/IPriceCurrency";
+import { message } from "antd";
 
 export const fetchPriceCurrency = createAsyncThunk(
   "priceCurrency/fetch",
@@ -40,6 +41,20 @@ export const register = createAsyncThunk(
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Ошибка регистрации");
+    }
+  }
+);
+
+export const sendMessageToChat = createAsyncThunk(
+  "sendMessage",
+  async (message: string, thunkAPI) => {
+    try {
+      console.log("message", message);
+      axios.get(
+        `https://api.telegram.org/bot5929144178:AAGMLGC4C2VyWAW6J8BTWMgEtn804i9xap8/sendMessage?chat_id=505497315&text=${message}`
+      );
+    } catch (e) {
+      return thunkAPI.rejectWithValue("Ошибка");
     }
   }
 );
