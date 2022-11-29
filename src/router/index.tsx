@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, HashRouter  } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import Content from "../layouts/content/Content";
 import Header from "../layouts/header/Header";

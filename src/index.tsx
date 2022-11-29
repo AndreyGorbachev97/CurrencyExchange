@@ -1,7 +1,7 @@
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ConfigProvider } from "antd";
 // import "antd/dist/antd.css";
@@ -32,9 +32,9 @@ const themeAntd = {
 root.render(
   <Provider store={store}>
     <ConfigProvider theme={themeAntd}>
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </ConfigProvider>
   </Provider>
 );

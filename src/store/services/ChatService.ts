@@ -4,13 +4,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 export const chatAPI = createApi({
   reducerPath: "chatAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://178.154.220.209:3001" }),
   tagTypes: ["Chat"],
   endpoints: (build) => ({
     fetchChat: build.query<any[], string>({
-      query: () => ({
+      query: (chatId: string) => ({
         url: "/",
         method: "GET",
+        params: { chatId },
       }),
       providesTags: (result) => ["Chat"],
     }),

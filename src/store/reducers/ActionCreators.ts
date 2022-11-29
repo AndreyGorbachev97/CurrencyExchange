@@ -51,7 +51,7 @@ export const sendMessageToChat = createAsyncThunk(
     try {
       console.log("message", message);
       axios.get(
-        `https://api.telegram.org/bot5929144178:AAGMLGC4C2VyWAW6J8BTWMgEtn804i9xap8/sendMessage?chat_id=505497315&text=${message}`
+        `https://api.telegram.org/bot5929144178:AAGMLGC4C2VyWAW6J8BTWMgEtn804i9xap8/sendMessage?chat_id=-815857169&text=${message}`
       );
     } catch (e) {
       return thunkAPI.rejectWithValue("Ошибка");
