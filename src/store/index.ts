@@ -2,16 +2,21 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import priceCurrencyReducer from "./reducers/PriceCurrencySlice";
 import authReducer from "./reducers/AuthSlice";
 import registerReducer from "./reducers/RegisterSlice";
+import {chatAPI} from "./services/ChatService";
 
 const rootReducer = combineReducers({
   priceCurrencyReducer,
   authReducer,
   registerReducer,
+  [chatAPI.reducerPath]: chatAPI.reducer
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
+      chatAPI.middleware,
+    ])
   });
 };
 
