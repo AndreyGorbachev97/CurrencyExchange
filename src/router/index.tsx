@@ -32,16 +32,18 @@ const RouterApp = () => {
     <div>
       <Header />
       <Chat />
-      <div>
+      <div
+        style={{ display: "flex", justifyContent: "center", padding: "40px" }}
+      >
+        <Sidebar
+          user={{ username: "test" }}
+          tabs={tabs}
+          isFullSideBar={true}
+          isExpand={true}
+          isWideWidth={true}
+          setExpand={() => console.log("expand")}
+        />
         <Content>
-          <Sidebar
-            user={{ username: "test" }}
-            tabs={tabs}
-            isFullSideBar={true}
-            isExpand={true}
-            isWideWidth={true}
-            setExpand={() => console.log("expand")}
-          />
           <Routes>
             {/* <Route path="/" element={<Post />} /> */}
             <Route path="/post" element={<div>post</div>} />

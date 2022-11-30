@@ -78,7 +78,14 @@ const GetCurrency: React.FC<propType> = ({
         addonAfter={active?.name || active?.type.toUpperCase() || "Ед."}
       />
       <div className={classes.segmented}>
-        <Segmented block onChange={onSearchType} value={type} options={tags} />
+        <Segmented
+          block
+          onChange={onSearchType}
+          value={type}
+          options={tags}
+          onResize={undefined}
+          onResizeCapture={undefined}
+        />
       </div>
 
       <Search
