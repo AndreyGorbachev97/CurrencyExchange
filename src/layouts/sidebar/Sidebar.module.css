@@ -1,0 +1,199 @@
+.container {
+  width: 360px;
+  min-width: 360px;
+  margin-right: 40px;
+  transition: all 0.2s ease-out;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 32px;
+
+  border: 2px solid blue;
+  height: 85%;
+  width: 300px;
+  bottom: 20px;
+
+  background: #fcfcfd;
+
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: #eaecf0;
+  box-shadow: 0 32px 64px -12px rgba(16, 24, 40, 0.14);
+  border-radius: 24px;
+
+  transition: all 0.2s ease-out;
+  position: fixed;
+  top: 60px;
+}
+
+.smallWidth {
+  min-width: 104px;
+  width: 104px;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.contentMain {
+  white-space: nowrap;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 8px;
+}
+
+.logoText {
+  font-family: "IterBold", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 30px;
+  color: #575757;
+}
+
+.avatar {
+  margin: 24px;
+}
+
+.fio {
+  font-family: "InterMedium", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  color: #101828;
+
+  margin-bottom: 40px;
+}
+
+.list {
+  width: 100%;
+  min-width: 52px;
+
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.listMarginTop {
+  margin-top: 120px;
+}
+
+.listItem {
+  display: flex;
+
+  background: transparent;
+  width: 100%;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 28px;
+  font-family: "InterLight", sans-serif;
+  font-weight: 400;
+
+  padding: 11px;
+  margin-bottom: 32px;
+  cursor: pointer;
+}
+
+.listItem:active {
+  font-family: "InterMedium", sans-serif;
+  font-weight: 500;
+}
+
+.itemIcon {
+  margin: 0 auto;
+}
+
+.itemLabelContainer {
+  position: absolute;
+  right: 0;
+  padding-bottom: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.itemLabel {
+  width: 8px;
+  height: 40px;
+
+  background: #69be28;
+  border-radius: 8px 0 0 8px;
+}
+
+.itemText {
+  padding-left: 23px;
+  transition: all 0.2s ease-out;
+}
+
+.active {
+  font-family: "InterMedium", sans-serif;
+  font-weight: 500;
+}
+
+.exitBlock {
+  font-family: "InterMedium", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+
+  display: flex;
+  align-items: center;
+
+  color: #101828;
+
+  padding: 14px;
+  cursor: pointer;
+}
+
+.expand {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  right: -18px;
+  top: 188px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  background: #ffffff;
+
+  box-shadow: 0 12px 16px -4px rgba(16, 24, 40, 0.08),
+    0 4px 6px -2px rgba(16, 24, 40, 0.03);
+  border-radius: 36px;
+  transition: all 0.2s ease-out;
+}
+
+.expand:hover {
+  width: 46px;
+  height: 46px;
+}
+
+@media screen and (max-width: 1400px) {
+  .list {
+    margin-top: 120px;
+  }
+}
