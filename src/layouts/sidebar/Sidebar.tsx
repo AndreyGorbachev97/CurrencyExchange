@@ -1,6 +1,5 @@
 import React from "react";
-import classes from "./SideBar.module.css";
-
+import classes from "./Sidebar.module.css";
 import { Avatar, Tooltip } from "antd";
 import {
   UserOutlined,
