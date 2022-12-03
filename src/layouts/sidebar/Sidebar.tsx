@@ -1,15 +1,13 @@
 import React from "react";
 import classes from "./SideBar.module.css";
 
-// import logoBank from "../../assets/images/logoBank.svg";
-// import smallLogoBank from "../../assets/images/smallLogoBank.svg";
-// import arrowLeftIcon from "../../assets/images/arrowLeft.svg";
-// import arrowRightIcon from "../../assets/images/arrowRight.svg";
-// import accessIcon from "../../assets/images/access.svg";
-// import exit from "../../assets/images/exit.svg";
-
-import { Avatar } from "antd";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Avatar, Tooltip } from "antd";
+import {
+  UserOutlined,
+  LogoutOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
 
@@ -55,17 +53,10 @@ const Sidebar = ({
       >
         {isWideWidth && (
           <div className={classes.expand} onClick={() => setExpand(!isExpand)}>
-            \ Logo
-            {/* <img src={isExpand ? arrowLeftIcon : arrowRightIcon} alt="Logo" /> */}
+            {isExpand ? <LeftOutlined /> : <RightOutlined />}
           </div>
         )}
         <div className={classes.contentMain}>
-          Logo
-          {/* <img
-            className={classes.logo}
-            src={isFullSideBar ? logoBank : smallLogoBank}
-            alt="Logo"
-          /> */}
           <Avatar
             className={classes.avatar}
             style={{ backgroundColor: "#87d068", margin: 24 }}
@@ -76,32 +67,46 @@ const Sidebar = ({
             <div className={classes.fio}>{`${user.username}`}</div>
           )}
           <div className={isExpand ? classes.list : classes.listMarginTop}>
-            {tabs.map(({ name, url, icon }) => (
-              <div
-                key={url}
-                onClick={() => navigate(url)}
-                className={`${
-                  location.pathname === url
-                    ? classes.listItem + " " + classes.active
-                    : classes.listItem
-                }`}
-              >
-                {icon}
-                {/* <img
-                  className={!isFullSideBar ? classes.itemIcon : ""}
-                  src={location.pathname === url ? iconActive : icon}
-                  alt="Logo"
-                /> */}
-                {isFullSideBar && (
+            {tabs.map(({ name, url, icon }) =>
+              isFullSideBar ? (
+                <div
+                  key={url}
+                  onClick={() => navigate(url)}
+                  className={`${
+                    location.pathname === url
+                      ? classes.listItem + " " + classes.active
+                      : classes.listItem
+                  }`}
+                >
+                  <img src={icon} alt="Logo" />
                   <div className={classes.itemText}>{name}</div>
-                )}
-                {location.pathname === url && (
-                  <div className={classes.itemLabelContainer}>
-                    <div className={classes.itemLabel}></div>
+                  {location.pathname === url && (
+                    <div className={classes.itemLabelContainer}>
+                      <div className={classes.itemLabel}></div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Tooltip placement="right" title={name}>
+                  <div
+                    key={url}
+                    onClick={() => navigate(url)}
+                    className={`${
+                      location.pathname === url
+                        ? classes.listItem + " " + classes.active
+                        : classes.listItem
+                    }`}
+                  >
+                    <img src={icon} alt="Logo" />
+                    {location.pathname === url && (
+                      <div className={classes.itemLabelContainer}>
+                        <div className={classes.itemLabel}></div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
+                </Tooltip>
+              )
+            )}
           </div>
         </div>
 

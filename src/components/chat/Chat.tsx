@@ -1,45 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { FloatButton, Input, Button, List } from "antd";
-import { CustomerServiceOutlined, CommentOutlined } from "@ant-design/icons";
+import { CustomerServiceOutlined } from "@ant-design/icons";
 import classes from "./Chat.module.css";
-import { v4 as uuidv4 } from "uuid";
 import { chatAPI } from "../../store/services/ChatService";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { SendOutlined } from "@ant-design/icons";
 import { sendMessageToChat } from "../../store/reducers/ActionCreators";
-import VirtualList from "rc-virtual-list";
-
-const { TextArea } = Input;
-
-const content = (
-  <div>
-    <p>Content</p>
-    <p>Content</p>
-  </div>
-);
 
 interface MsgItem {
   type: string;
   msg: string;
 }
-
-const msgs = [
-  { type: "my", msg: "Lorem4 asdas" },
-  { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "my", msg: "Lorem4 asdas" },
-  // { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "my", msg: "Lorem4 asdas" },
-  // { type: "my", msg: "Lorem4 asdas" },
-  // { type: "my", msg: "Lorem4 asdas" },
-  // { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "admin", msg: "qwedfsdf sdfsd d" },
-  // { type: "my", msg: "Lorem4 asdas" },
-  // { type: "my", msg: "Lorem4 asdas" },
-  // { type: "my", msg: "Lorem4 asdas" },
-];
 
 const randomString = (i: number) => {
   var rnd = "";
@@ -55,7 +26,6 @@ const Chat: React.FC = () => {
   const [msg, setMsg] = useState("");
 
   const { auth } = useAppSelector((state) => state.authReducer);
-  console.log("auth", auth);
 
   const fieldRef = useRef<HTMLInputElement>(null);
 
@@ -68,7 +38,6 @@ const Chat: React.FC = () => {
     setChatId(randomString(12));
   }, []);
 
-  console.log("data", data);
   useEffect(() => {
     console.log("data2", data);
     data &&
@@ -93,13 +62,9 @@ const Chat: React.FC = () => {
     }
   };
 
-  console.log("messages", messages);
   const handleChange = () => {
     setShowChat(!showChat);
   };
-
-  console.log("chatId", chatId);
-  console.log(typeof chatId);
 
   const lastMessage = messages[messages.length - 1];
   return (

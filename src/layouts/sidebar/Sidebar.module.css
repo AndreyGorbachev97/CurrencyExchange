@@ -48,8 +48,22 @@
   width: 100%;
 }
 
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
-  margin-bottom: 40px;
+  margin-right: 8px;
+}
+
+.logoText {
+  font-family: "IterBold", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 30px;
+  color: #575757;
 }
 
 .avatar {
