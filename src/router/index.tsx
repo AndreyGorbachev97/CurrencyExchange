@@ -7,7 +7,7 @@ import {
   Navigate,
   HashRouter,
 } from "react-router-dom";
-import { useAppSelector } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import Content from "../layouts/content/Content";
 import Header from "../layouts/header/Header";
 import Home from "../pages/home/Home";
@@ -20,6 +20,7 @@ import historyIcon from "../assets/images/sidebar/history.png";
 import swapIcon from "../assets/images/sidebar/swap.png";
 import classes from "./Route.module.css";
 import Card from "../pages/card/Card";
+import { checkAuth } from "../store/reducers/ActionCreators";
 
 const tabs = [
   {
@@ -42,14 +43,19 @@ const tabs = [
   },
 ];
 const RouterApp = () => {
-  // const { auth, isLoading, error } = useAppSelector(
-  //   (state) => state.authReducer
-  // );
-  const auth = true;
+  const { auth, isLoading, error } = useAppSelector(
+    (state) => state.authReducer
+  );
   const [isExpand, setIsExpand] = useState(true);
   const { width } = useWindowDimensions();
   const isWideWidth = width > 1400;
   const isFullSideBar = isWideWidth && isExpand;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
+
   useEffect(() => {
     if (isWideWidth) {
       setIsExpand(true);
@@ -63,21 +69,26 @@ const RouterApp = () => {
       <Header />
       <Chat />
       <div className={classes.container}>
-        <Sidebar
-          user={{ username: "test" }}
-          tabs={tabs}
-          isFullSideBar={isFullSideBar}
-          isExpand={isExpand}
-          isWideWidth={isWideWidth}
-          setExpand={setIsExpand}
-        />
+        {auth && (
+          <Sidebar
+            user={auth}
+            tabs={tabs}
+            isFullSideBar={isFullSideBar}
+            isExpand={isExpand}
+            isWideWidth={isWideWidth}
+            setExpand={setIsExpand}
+          />
+        )}
         <Content>
           <Routes>
-            {tabs.map((item, key) => (
-              <Route key={key} path={item.url} element={item.page} />
-            ))}
-            <Route path="/post" element={<div>post</div>} />
-            {/* <Route path="/home" element={<Home />} /> */}
+            {auth ? (
+              tabs.map((item, key) => (
+                <Route key={key} path={item.url} element={item.page} />
+              ))
+            ) : (
+              <Route path="/home" element={<Home />} />
+            )}
+
             <Route path="*" element={<Navigate to="/home" replace />} />
           </Routes>
         </Content>

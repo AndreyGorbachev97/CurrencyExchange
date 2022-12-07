@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { auth, fetchPriceCurrency, register } from "./ActionCreators";
+import {
+  auth,
+  checkAuth,
+  fetchPriceCurrency,
+  logout,
+  register,
+} from "./ActionCreators";
 import { IPriceCurrency } from "../../models/IPriceCurrency";
 
 interface authState {
@@ -19,14 +25,26 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [logout.fulfilled.type]: (state, action: PayloadAction<any>) => {
+      state.isLoading = false;
+      state.error = "";
+      state.auth = action.payload;
+    },
+    [checkAuth.fulfilled.type]: (state, action: PayloadAction<any>) => {
+      state.isLoading = false;
+      state.error = "";
+      state.auth = action.payload;
+    },
     [register.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
+      localStorage.setItem("accessToken", JSON.stringify(action.payload));
       state.auth = action.payload;
     },
     [auth.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
+      localStorage.setItem("accessToken", JSON.stringify(action.payload));
       state.auth = action.payload;
     },
     [auth.pending.type]: (state) => {
