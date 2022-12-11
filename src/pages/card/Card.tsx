@@ -3,9 +3,18 @@ import classes from "./Card.module.css";
 import Flags from "country-flag-icons/react/1x1";
 import FormAddCard from "./FormAddCard";
 import masterCardIcon from "../../assets/images/typesCard/masterCard.svg";
+import { useAppDispatch } from "../../hooks/redux";
+import { getCards } from "../../store/reducers/actions/bankCard";
 
 const Card: React.FC = () => {
   const Flag = Flags.RU;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCards());
+  }, []);
+
   return (
     <div className={classes.container}>
       <h1 className={classes.titleHead}>Управление картами</h1>

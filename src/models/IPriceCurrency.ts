@@ -1,4 +1,4 @@
 export interface IPriceCurrency {
-  symbol: string,
-  price: string,
+  symbol: string;
+  price: string;
 }

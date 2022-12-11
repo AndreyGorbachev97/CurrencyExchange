@@ -15,29 +15,5 @@ export const chatAPI = createApi({
       }),
       providesTags: (result) => ["Chat"],
     }),
-    // createWorker: build.mutation({
-    //   query: (post) => ({
-    //     url: 'api/worker/create',
-    //     method: 'POST',
-    //     body: post
-    //   }),
-    //   invalidatesTags: ['Worker']
-    // }),
-    // updateWorker: build.mutation({
-    //   query: (post) => ({
-    //     url: 'api/worker/update',
-    //     method: 'PUT',
-    //     body: post
-    //   }),
-    //   invalidatesTags: ['Worker']
-    // }),
-    // deleteWorker: build.mutation({
-    //   query: (post) => ({
-    //     url: `api/worker/delete${post.id}`,
-    //     method: 'DELETE',
-    //     body: post
-    //   }),
-    //   invalidatesTags: ['Worker']
-    // }),
   }),
 });

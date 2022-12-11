@@ -39,7 +39,6 @@ const Chat: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("data2", data);
     data &&
       setMessages([
         ...messages,
