@@ -43,7 +43,7 @@ const tabs = [
   },
 ];
 const RouterApp = () => {
-  const { auth, isLoading, error } = useAppSelector(
+  const { auth, user, isLoading, error } = useAppSelector(
     (state) => state.authReducer
   );
   const [isExpand, setIsExpand] = useState(true);
@@ -71,7 +71,7 @@ const RouterApp = () => {
       <div className={classes.container}>
         {auth && (
           <Sidebar
-            user={auth}
+            user={user}
             tabs={tabs}
             isFullSideBar={isFullSideBar}
             isExpand={isExpand}

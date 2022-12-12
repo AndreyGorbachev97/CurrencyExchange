@@ -48,16 +48,17 @@ export const authSlice = createSlice({
     [auth.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
+      console.log("action", action.payload);
       localStorage.setItem(
         "accessToken",
-        JSON.stringify(action.payload.access)
+        JSON.stringify(action.payload.data.access)
       );
       localStorage.setItem(
         "refreshToken",
-        JSON.stringify(action.payload.refresh)
+        JSON.stringify(action.payload.data.refresh)
       );
-      console.log("jwtDecode", jwtDecode(action.payload.access));
-      state.auth = jwtDecode(action.payload.access);
+      state.auth = jwtDecode(action.payload.data.access);
+      state.user = action.payload.user;
     },
     [auth.pending.type]: (state) => {
       state.isLoading = true;

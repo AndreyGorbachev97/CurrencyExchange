@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import InputMask from "react-input-mask";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
@@ -21,6 +22,7 @@ import {
 import classes from "./FormAddCard.module.css";
 import { sendCard } from "../../store/reducers/ActionCreators";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { moon } from "../../utils/moonAlgorithm";
 
 const normFile = (e: any) => {
   console.log("Upload event:", e);
@@ -35,7 +37,13 @@ const FormAddCard: React.FC = () => {
   const [fileList, setFileList] = useState(null);
   const dispatch = useAppDispatch();
   const onFinish = ({ cardNumber }: any) => {
-    dispatch(sendCard({ cardNumber, file: fileList, username: auth.username }));
+    dispatch(
+      sendCard({
+        cardNumber: cardNumber.replaceAll(" ", ""),
+        file: fileList,
+        username: auth.username,
+      })
+    );
   };
 
   const validateFileType = (
@@ -76,9 +84,31 @@ const FormAddCard: React.FC = () => {
         <Form.Item
           label="Номер карты"
           name="cardNumber"
-          rules={[{ required: true, message: "Введите номер карты" }]}
+          rules={[
+            { required: true, message: "Введите номер карты" },
+            () => ({
+              validator(_, value) {
+                if (value.length > 19 && !moon(value.replaceAll(" ", ""))) {
+                  return Promise.reject(new Error("Номер карты не валиден"));
+                }
+                if (value.length < 19) {
+                  return Promise.reject(
+                    new Error("Номер карты должен быть не менее 16 символов")
+                  );
+                }
+                return Promise.resolve();
+              },
+            }),
+          ]}
         >
-          <Input />
+          <InputMask
+            mask="9999 9999 9999 999999"
+            alwaysShowMask={true}
+            maskPlaceholder=""
+          >
+            <Input placeholder="" />
+          </InputMask>
+          {/* <Input /> */}
         </Form.Item>
 
         <Form.Item

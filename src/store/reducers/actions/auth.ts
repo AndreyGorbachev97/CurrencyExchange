@@ -20,22 +20,26 @@ export const checkAuth = createAsyncThunk("checkAuth", async (_, thunkAPI) => {
     const response =
       decodeToken.user_id &&
       (await $api.get<any>(`user/${decodeToken.user_id}`));
-    return {auth: JSON.parse(auth), user: response.data};
+    return { auth: JSON.parse(auth), user: response.data };
   } catch (e) {
     return thunkAPI.rejectWithValue("");
   }
 });
 
-export const auth = createAsyncThunk("auth", async (data: any, thunkAPI) => {
-  try {
-    // todo добавить тип вместо any
-    const response = await $api.post<any>("auth/", data);
-    return response.data;
-  } catch (e) {
-    console.log("Err", e);
-    return thunkAPI.rejectWithValue("Ошибка авторизации");
+export const auth = createAsyncThunk(
+  "auth",
+  async (data: { username: string; password: string }, thunkAPI) => {
+    try {
+      // todo добавить тип вместо any
+      const response = await $api.post<any>("auth/", data);
+      console.log("response", response);
+      return { data: response.data, user: { username: data.username } };
+    } catch (e) {
+      console.log("Err", e);
+      return thunkAPI.rejectWithValue("Ошибка авторизации");
+    }
   }
-});
+);
 
 export const getUser = createAsyncThunk(
   "checkUser",

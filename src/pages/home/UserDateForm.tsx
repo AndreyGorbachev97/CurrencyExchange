@@ -26,6 +26,7 @@ type propType = {
   giveCurrency: ICurrency;
   getCurrency: ICurrency;
   auth: any; //исправить
+  user: any;
 };
 
 const UserDateForm: React.FC<propType> = ({
@@ -33,6 +34,7 @@ const UserDateForm: React.FC<propType> = ({
   giveCurrency,
   getCurrency,
   auth,
+  user
 }: propType) => {
   let coin = getCurrency;
   let price = giveCurrency;
@@ -61,7 +63,7 @@ const UserDateForm: React.FC<propType> = ({
       {auth && (
         <div
           className={classes.exchangeRates}
-        >{`Вы успешно авторизованы ${auth.username}`}</div>
+        >{`Вы успешно авторизованы ${user.username}`}</div>
       )}
       {!auth && (
         <>

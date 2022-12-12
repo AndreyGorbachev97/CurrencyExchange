@@ -92,3 +92,8 @@
   line-height: 32px;
   color: #575757;
 }
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
