@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GetCurrency from "./GetCurrency";
 import GiveCurrency from "./GiveCurrency";
-import UserDateForm from "./UserDateForm";
+import UserDateForm from "./CurrencyExchange";
 import classes from "./Home.module.css";
 import { ICurrency } from "../../interfaces/currency";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";

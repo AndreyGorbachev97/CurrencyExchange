@@ -6,6 +6,7 @@ import ModalComponent from "../../components/Modal";
 import AuthForm from "../../components/forms/AuthFrom";
 import RegisterFrom from "../../components/forms/RegisterFrom";
 import { ICurrency } from "../../interfaces/currency";
+import CurrencyForm from "../../components/forms/CurrencyForm";
 
 const ButtonAuth = ({ onChange }: any) => {
   return (
@@ -29,12 +30,12 @@ type propType = {
   user: any;
 };
 
-const UserDateForm: React.FC<propType> = ({
+const CurrencyExchange: React.FC<propType> = ({
   course,
   giveCurrency,
   getCurrency,
   auth,
-  user
+  user,
 }: propType) => {
   let coin = getCurrency;
   let price = giveCurrency;
@@ -61,9 +62,11 @@ const UserDateForm: React.FC<propType> = ({
         )}
       </div>
       {auth && (
-        <div
-          className={classes.exchangeRates}
-        >{`Вы успешно авторизованы ${user.username}`}</div>
+        <div className={classes.exchangeRates}>
+          {/* <div>{`Вы успешно авторизованы ${user.username}`}</div> */}
+
+          <CurrencyForm />
+        </div>
       )}
       {!auth && (
         <>
@@ -87,4 +90,4 @@ const UserDateForm: React.FC<propType> = ({
   );
 };
 
-export default UserDateForm;
+export default CurrencyExchange;
