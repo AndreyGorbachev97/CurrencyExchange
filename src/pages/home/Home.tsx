@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import GetCurrency from "./GetCurrency";
 import GiveCurrency from "./GiveCurrency";
-import UserDateForm from "./CurrencyExchange";
+import CurrencyExchange from "./CurrencyExchange";
 import classes from "./Home.module.css";
-import { ICurrency } from "../../interfaces/currency";
+import { ICurrency } from "../../models/currency";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchPriceCurrency } from "../../store/reducers/ActionCreators";
 import { ITag, tags } from "./constants";
@@ -14,6 +14,7 @@ const Home: React.FC = () => {
     name: "",
     value: 0,
     type: "",
+    title: "",
   };
 
   const [giveCurrency, setGiveCurrency] = useState(initCurrency);
@@ -92,7 +93,7 @@ const Home: React.FC = () => {
         />
       </div>
       <div className={classes.itemContainer}>
-        <UserDateForm
+        <CurrencyExchange
           course={course}
           giveCurrency={giveCurrency}
           getCurrency={getCurrency}

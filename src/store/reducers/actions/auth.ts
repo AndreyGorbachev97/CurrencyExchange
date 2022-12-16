@@ -15,12 +15,9 @@ export const logout = createAsyncThunk("logout", async (_, thunkAPI) => {
 
 export const checkAuth = createAsyncThunk("checkAuth", async (_, thunkAPI) => {
   try {
-    const auth = localStorage.getItem("accessToken");
-    const decodeToken: ITokenDecode = auth ? jwtDecode(auth) : {};
-    const response =
-      decodeToken.user_id &&
-      (await $api.get<any>(`user/${decodeToken.user_id}`));
-    return { auth: JSON.parse(auth), user: response.data };
+    const response = await $api.get<any>("currentUser");
+    console.log("response", response);
+    // return { auth: JSON.parse(auth), user: response.data };
   } catch (e) {
     return thunkAPI.rejectWithValue("");
   }

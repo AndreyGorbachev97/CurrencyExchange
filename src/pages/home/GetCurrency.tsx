@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Input, InputNumber, Segmented } from "antd";
 import classes from "./Home.module.css";
-import { ICurrency } from "../../interfaces/currency";
+import { ICurrency } from "../../models/currency";
 import { currencies, ITag, Item } from "./constants";
 
 const { Search } = Input;
@@ -41,6 +41,7 @@ const GetCurrency: React.FC<propType> = ({
         name: item.name || item.type,
         value: currency,
         type: item.type,
+        title: item.title,
       });
     }
   };

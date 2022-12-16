@@ -6,10 +6,10 @@ import {
   getCards,
   logout,
   register,
-} from "./ActionCreators";
-import { IPriceCurrency } from "../../models/IPriceCurrency";
+} from "../ActionCreators";
+import { IPriceCurrency } from "../../../models/IPriceCurrency";
 import jwtDecode from "jwt-decode";
-import { ICard } from "../../models/ICard";
+import { ICard } from "../../../models/ICard";
 
 interface cardState {
   cards: any;

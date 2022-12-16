@@ -5,8 +5,8 @@ import {
   fetchPriceCurrency,
   logout,
   register,
-} from "./ActionCreators";
-import { IPriceCurrency } from "../../models/IPriceCurrency";
+} from "../ActionCreators";
+import { IPriceCurrency } from "../../../models/IPriceCurrency";
 import jwtDecode from "jwt-decode";
 
 interface authState {

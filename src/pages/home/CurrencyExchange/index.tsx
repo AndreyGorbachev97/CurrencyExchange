@@ -1,26 +1,14 @@
 import React from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
-import classes from "./Home.module.css";
-import ModalComponent from "../../components/Modal";
-import AuthForm from "../../components/forms/AuthFrom";
-import RegisterFrom from "../../components/forms/RegisterFrom";
-import { ICurrency } from "../../interfaces/currency";
-import CurrencyForm from "../../components/forms/CurrencyForm";
-
-const ButtonAuth = ({ onChange }: any) => {
-  return (
-    <Button
-      size="large"
-      onClick={onChange}
-      className={classes.button}
-      block
-      type="primary"
-    >
-      Авторизоваться
-    </Button>
-  );
-};
+import classes from "../Home.module.css";
+import ModalComponent from "../../../components/Modal";
+import AuthForm from "../../../components/forms/AuthFrom";
+import RegisterFrom from "../../../components/forms/RegisterFrom";
+import { ICurrency } from "../../../models/currency";
+import RequisitesForm from "./RequisitesForm";
+import { useAppDispatch } from "../../../hooks/redux";
+import { currencyExchange } from "../../../store/reducers/actions/currencyExchange";
 
 type propType = {
   course: string;
@@ -37,12 +25,19 @@ const CurrencyExchange: React.FC<propType> = ({
   auth,
   user,
 }: propType) => {
+  const dispatch = useAppDispatch();
   let coin = getCurrency;
   let price = giveCurrency;
   if (giveCurrency.type === "coin") {
     coin = giveCurrency;
     price = getCurrency;
   }
+
+  const submitForm = (data: any) => {
+    dispatch(
+      currencyExchange({ ...data, give: giveCurrency, get: getCurrency })
+    );
+  };
 
   return (
     <div>
@@ -63,9 +58,12 @@ const CurrencyExchange: React.FC<propType> = ({
       </div>
       {auth && (
         <div className={classes.exchangeRates}>
-          {/* <div>{`Вы успешно авторизованы ${user.username}`}</div> */}
-
-          <CurrencyForm />
+          <RequisitesForm
+            submitForm={submitForm}
+            disabled={
+              !giveCurrency.type || !giveCurrency.value || !getCurrency.type
+            }
+          />
         </div>
       )}
       {!auth && (

@@ -1,8 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import priceCurrencyReducer from "./reducers/PriceCurrencySlice";
-import authReducer from "./reducers/AuthSlice";
-import cardReducer from "./reducers/CardSlice";
-import registerReducer from "./reducers/RegisterSlice";
+import priceCurrencyReducer from "./reducers/slices/PriceCurrencySlice";
+import authReducer from "./reducers/slices/AuthSlice";
+import cardReducer from "./reducers/slices/CardSlice";
+import registerReducer from "./reducers/slices/RegisterSlice";
+import CurrencyExchangeReducer from "./reducers/slices/CurrencyExchangeSlice";
 import { chatAPI } from "./services/ChatService";
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   authReducer,
   cardReducer,
   registerReducer,
+  CurrencyExchangeReducer,
   [chatAPI.reducerPath]: chatAPI.reducer,
 });
 
