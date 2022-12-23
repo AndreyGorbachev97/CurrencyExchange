@@ -34,12 +34,23 @@ const GetCurrency: React.FC<propType> = ({
     setList(currencies.filter((item: any) => item.type !== giveCurrency.type));
   }, [giveCurrency]);
 
+  useEffect(() => {
+    if (active?.name) {
+      setGetCurrency({
+        name: active.name || active.type,
+        value: +amount,
+        type: active.type,
+        title: active.title,
+      });
+    }
+  }, [amount]);
+
   const onChangeItem = (item: Item) => {
     setActive(item);
     if (item.name) {
       setGetCurrency({
         name: item.name || item.type,
-        value: currency,
+        value: +amount,
         type: item.type,
         title: item.title,
       });

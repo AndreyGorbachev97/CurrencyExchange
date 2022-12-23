@@ -36,8 +36,9 @@ export const authSlice = createSlice({
     [checkAuth.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
-      state.auth = action.payload.auth;
-      state.user = action.payload.user;
+      // state.auth = action.payload.auth;
+      console.log("payload", action.payload);
+      state.user = action.payload;
     },
     [register.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
@@ -49,6 +50,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = "";
       console.log("action", action.payload);
+      console.log("access", jwtDecode(action.payload.data.access));
       localStorage.setItem(
         "accessToken",
         JSON.stringify(action.payload.data.access)

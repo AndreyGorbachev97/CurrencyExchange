@@ -4,41 +4,35 @@ import { getCards } from "../../../store/reducers/ActionCreators";
 import { Select, Form, message, AutoComplete, Space, Button } from "antd";
 import { ICard } from "../../../models/ICard";
 import { cardMskForStr } from "../../../utils/cardMaskForStr";
-
-interface IRequisitesForm {
-  cardNumber: number;
-  walletNumber: string;
-}
+import ModalComponent from "../../../components/Modal";
+import ConfirmForm from "./ConfirmForm";
+import { ICurrency } from "../../../models/currency";
+import { IRequisitesForm } from "../../../models/IRequisitesForm";
 
 type propType = {
+  giveCurrency: ICurrency;
+  getCurrency: ICurrency;
   submitForm: (data: IRequisitesForm) => void;
   disabled: boolean;
 };
 
-const RequisitesForm: React.FC<propType> = ({ submitForm, disabled }) => {
+const RequisitesForm: React.FC<propType> = ({
+  giveCurrency,
+  getCurrency,
+  submitForm,
+  disabled,
+}) => {
   const { cards, isLoading, error } = useAppSelector(
     (state) => state.cardReducer
   );
-  const {
-    currencyExchange,
-    error: errorExchange,
-    isLoading: isLoadingExchange,
-  } = useAppSelector((state) => state.CurrencyExchangeReducer);
+
   const [form] = Form.useForm();
-  const onFinish = (values: IRequisitesForm) => {
-    // message.success("Submit success!");
-    submitForm(values);
-  };
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getCards());
   }, []);
-
-  useEffect(() => {
-    errorExchange && message.error("Произошла ошибка при отправке формы");
-  }, [errorExchange, isLoadingExchange]);
 
   // todo reduce временно
   const optionsCard = cards
@@ -58,7 +52,6 @@ const RequisitesForm: React.FC<propType> = ({ submitForm, disabled }) => {
       <Form
         form={form}
         layout="vertical"
-        onFinish={onFinish}
         autoComplete="off"
       >
         <Form.Item
@@ -83,17 +76,18 @@ const RequisitesForm: React.FC<propType> = ({ submitForm, disabled }) => {
             placeholder="Номер кошелька"
           />
         </Form.Item>
-        <Form.Item>
-          <Button
-            disabled={disabled}
-            block
-            size="large"
-            type="primary"
-            htmlType="submit"
-          >
-            Обменять
-          </Button>
-        </Form.Item>
+        <ModalComponent
+          title="Подтверждение"
+          buttonName="Обменять"
+          disabled={disabled}
+        >
+          <ConfirmForm
+            getCurrency={getCurrency}
+            giveCurrency={giveCurrency}
+            submitForm={submitForm}
+            getFormData={() => form.getFieldsValue()}
+          />
+        </ModalComponent>
       </Form>
     </div>
   );

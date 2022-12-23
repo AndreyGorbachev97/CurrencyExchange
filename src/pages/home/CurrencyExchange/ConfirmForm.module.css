@@ -1,0 +1,41 @@
+.confirmContainer {
+  padding: 8px 0;
+}
+
+.confirmExchange {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #f4f5f7;
+  border-radius: 8px;
+}
+
+.confirmImg {
+  margin-bottom: 4px;
+}
+
+.confirmArrow {
+  font-size: 32px;
+  color: #8b8b8b;
+}
+
+.confirmExchangeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* font-size: 14px; */
+  font-family: "InterMedium";
+}
+
+.confirmUserInfo {
+  /* font-size: 16px; */
+  margin-bottom: 16px;
+}
+
+.confirmUserInfoHeader {
+  /* font-size: 18px; */
+  font-family: "InterMedium";
+  color: #2c2c2c;
+}

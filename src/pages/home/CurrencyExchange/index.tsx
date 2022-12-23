@@ -33,10 +33,16 @@ const CurrencyExchange: React.FC<propType> = ({
     price = getCurrency;
   }
 
-  const submitForm = (data: any) => {
-    dispatch(
-      currencyExchange({ ...data, give: giveCurrency, get: getCurrency })
-    );
+  const submitForm = (values: any) => {
+    const data = {
+      ...values,
+      get_name: getCurrency.title,
+      get_value: getCurrency.value,
+      give_name: giveCurrency.title,
+      give_value: giveCurrency.value,
+    };
+
+    dispatch(currencyExchange(data));
   };
 
   return (
@@ -59,6 +65,8 @@ const CurrencyExchange: React.FC<propType> = ({
       {auth && (
         <div className={classes.exchangeRates}>
           <RequisitesForm
+            getCurrency={getCurrency}
+            giveCurrency={giveCurrency}
             submitForm={submitForm}
             disabled={
               !giveCurrency.type || !giveCurrency.value || !getCurrency.type
