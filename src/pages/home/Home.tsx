@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   const { priceCurrency, isLoading, error } = useAppSelector(
     (state) => state.priceCurrencyReducer
   );
-  const { auth } = useAppSelector((state) => state.authReducer);
+  const { auth, user } = useAppSelector((state) => state.authReducer);
 
   const changeGiveCurrency = (item: ICurrency) => {
     const mapTags = tags.map((tag: ITag) => {
@@ -97,6 +97,7 @@ const Home: React.FC = () => {
           giveCurrency={giveCurrency}
           getCurrency={getCurrency}
           auth={auth}
+          user={user}
         />
       </div>
     </div>

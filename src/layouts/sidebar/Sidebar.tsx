@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux";
+import { logout } from "../../store/reducers/ActionCreators";
 
 type propType = {
   isFullSideBar: boolean;
@@ -109,7 +110,7 @@ const Sidebar = ({
           </div>
         </div>
 
-        <div className={classes.exitBlock} onClick={() => console.log("выход")}>
+        <div className={classes.exitBlock} onClick={() => dispatch(logout())}>
           {/* <img src={exit} alt="Logo" /> */}
           <LogoutOutlined />
           {isFullSideBar && <div className={classes.itemText}>Выход</div>}
