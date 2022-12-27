@@ -54,7 +54,7 @@ const RouterApp = () => {
 
   useEffect(() => {
     dispatch(checkAuth());
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     if (isWideWidth) {
