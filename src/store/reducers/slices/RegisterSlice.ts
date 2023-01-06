@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { register } from "./ActionCreators";
-import { IPriceCurrency } from "../../models/IPriceCurrency";
+import { register } from "../ActionCreators";
+import { IPriceCurrency } from "../../../models/IPriceCurrency";
 
 interface registerState {
   register: any;

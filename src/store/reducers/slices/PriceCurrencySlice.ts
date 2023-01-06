@@ -1,7 +1,7 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchPriceCurrency } from "./ActionCreators";
-import { IPriceCurrency } from "../../models/IPriceCurrency";
+import { fetchPriceCurrency } from "../ActionCreators";
+import { IPriceCurrency } from "../../../models/IPriceCurrency";
 
 interface CurrencyPriceState {
   priceCurrency: IPriceCurrency;

@@ -15,7 +15,6 @@ const AuthForm: React.FC = ({ handleCancel }: propType) => {
     error,
   } = useAppSelector((state) => state.authReducer);
 
-  console.log("error", error);
   const onFinish = (values: any) => {
     console.log("Success:", values);
     dispatch(auth(values));

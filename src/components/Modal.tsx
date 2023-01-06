@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-// import "antd/dist/antd.css";
-// import "./index.css";
 import { Button, Modal } from "antd";
 
 type propType = {
   title: string;
   buttonName: string;
   children: any;
+  disabled?: boolean;
 };
 
 const ModalComponent: React.FC<propType> = ({
   title,
   buttonName,
   children,
+  disabled,
 }: propType) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,6 +36,7 @@ const ModalComponent: React.FC<propType> = ({
         size="large"
         type="primary"
         onClick={showModal}
+        disabled={disabled}
       >
         {buttonName}
       </Button>

@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  auth,
-  checkAuth,
-  fetchPriceCurrency,
-  logout,
-  register,
-} from "./ActionCreators";
-import { IPriceCurrency } from "../../models/IPriceCurrency";
+import { auth, checkAuth, logout, register } from "../ActionCreators";
 import jwtDecode from "jwt-decode";
 
 interface authState {
@@ -36,7 +29,6 @@ export const authSlice = createSlice({
     [checkAuth.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
-      state.auth = action.payload.auth;
       state.user = action.payload.user;
     },
     [register.fulfilled.type]: (state, action: PayloadAction<any>) => {
@@ -48,7 +40,6 @@ export const authSlice = createSlice({
     [auth.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
-      console.log("action", action.payload);
       localStorage.setItem(
         "accessToken",
         JSON.stringify(action.payload.data.access)
@@ -58,7 +49,6 @@ export const authSlice = createSlice({
         JSON.stringify(action.payload.data.refresh)
       );
       state.auth = jwtDecode(action.payload.data.access);
-      state.user = action.payload.user;
     },
     [auth.pending.type]: (state) => {
       state.isLoading = true;

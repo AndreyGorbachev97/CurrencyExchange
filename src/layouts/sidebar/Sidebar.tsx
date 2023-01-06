@@ -64,7 +64,7 @@ const Sidebar = ({
             icon={<UserOutlined />}
           />
           {isFullSideBar && (
-            <div className={classes.fio}>{`${user.username}`}</div>
+            <div className={classes.fio}>{`${user.username || "..."}`}</div>
           )}
           <div className={isExpand ? classes.list : classes.listMarginTop}>
             {tabs.map(({ name, url, icon }) =>

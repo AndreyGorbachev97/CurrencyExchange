@@ -1,25 +1,14 @@
 import React from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
-import classes from "./Home.module.css";
-import ModalComponent from "../../components/Modal";
-import AuthForm from "../../components/forms/AuthFrom";
-import RegisterFrom from "../../components/forms/RegisterFrom";
-import { ICurrency } from "../../interfaces/currency";
-
-const ButtonAuth = ({ onChange }: any) => {
-  return (
-    <Button
-      size="large"
-      onClick={onChange}
-      className={classes.button}
-      block
-      type="primary"
-    >
-      Авторизоваться
-    </Button>
-  );
-};
+import classes from "../Home.module.css";
+import ModalComponent from "../../../components/Modal";
+import AuthForm from "../../../components/forms/AuthFrom";
+import RegisterFrom from "../../../components/forms/RegisterFrom";
+import { ICurrency } from "../../../models/currency";
+import RequisitesForm from "./RequisitesForm";
+import { useAppDispatch } from "../../../hooks/redux";
+import { currencyExchange } from "../../../store/reducers/actions/currencyExchange";
 
 type propType = {
   course: string;
@@ -29,19 +18,32 @@ type propType = {
   user: any;
 };
 
-const UserDateForm: React.FC<propType> = ({
+const CurrencyExchange: React.FC<propType> = ({
   course,
   giveCurrency,
   getCurrency,
   auth,
-  user
+  user,
 }: propType) => {
+  const dispatch = useAppDispatch();
   let coin = getCurrency;
   let price = giveCurrency;
   if (giveCurrency.type === "coin") {
     coin = giveCurrency;
     price = getCurrency;
   }
+
+  const submitForm = (values: any) => {
+    const data = {
+      ...values,
+      get_name: getCurrency.title,
+      get_value: getCurrency.value,
+      give_name: giveCurrency.title,
+      give_value: giveCurrency.value,
+    };
+
+    dispatch(currencyExchange(data));
+  };
 
   return (
     <div>
@@ -61,9 +63,16 @@ const UserDateForm: React.FC<propType> = ({
         )}
       </div>
       {auth && (
-        <div
-          className={classes.exchangeRates}
-        >{`Вы успешно авторизованы ${user.username}`}</div>
+        <div className={classes.exchangeRates}>
+          <RequisitesForm
+            getCurrency={getCurrency}
+            giveCurrency={giveCurrency}
+            submitForm={submitForm}
+            disabled={
+              !giveCurrency.type || !giveCurrency.value || !getCurrency.type
+            }
+          />
+        </div>
       )}
       {!auth && (
         <>
@@ -87,4 +96,4 @@ const UserDateForm: React.FC<propType> = ({
   );
 };
 
-export default UserDateForm;
+export default CurrencyExchange;

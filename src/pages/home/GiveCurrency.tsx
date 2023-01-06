@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Segmented, InputNumber } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
-import { ICurrency } from "../../interfaces/currency";
+import { ICurrency } from "../../models/currency";
 import { currencies, ITag, Item } from "./constants";
 
 const { Search } = Input;
@@ -30,7 +30,12 @@ const GiveCurrency: React.FC<propType> = ({
   const onChangeCurrency = (value: number) => {
     setCurrency(value);
     if (active?.name) {
-      setGiveCurrency({ name: active.name, value, type: active.type });
+      setGiveCurrency({
+        name: active.name,
+        value,
+        type: active.type,
+        title: active.title,
+      });
     }
   };
 
@@ -41,6 +46,7 @@ const GiveCurrency: React.FC<propType> = ({
         name: item.name || item.type,
         value: currency,
         type: item.type,
+        title: item.title,
       });
     }
   };

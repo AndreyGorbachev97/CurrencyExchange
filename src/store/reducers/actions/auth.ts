@@ -15,12 +15,12 @@ export const logout = createAsyncThunk("logout", async (_, thunkAPI) => {
 
 export const checkAuth = createAsyncThunk("checkAuth", async (_, thunkAPI) => {
   try {
-    const auth = localStorage.getItem("accessToken");
-    const decodeToken: ITokenDecode = auth ? jwtDecode(auth) : {};
+    const token = localStorage.getItem("accessToken");
+    const accessTokenDecode: ITokenDecode = jwtDecode(token);
     const response =
-      decodeToken.user_id &&
-      (await $api.get<any>(`user/${decodeToken.user_id}`));
-    return { auth: JSON.parse(auth), user: response.data };
+      accessTokenDecode &&
+      (await $api.get<any>(`currentUser/${accessTokenDecode.user_id}`));
+    return { user: response.data };
   } catch (e) {
     return thunkAPI.rejectWithValue("");
   }
@@ -32,10 +32,8 @@ export const auth = createAsyncThunk(
     try {
       // todo добавить тип вместо any
       const response = await $api.post<any>("auth/", data);
-      console.log("response", response);
       return { data: response.data, user: { username: data.username } };
     } catch (e) {
-      console.log("Err", e);
       return thunkAPI.rejectWithValue("Ошибка авторизации");
     }
   }

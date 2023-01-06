@@ -26,10 +26,6 @@ import { moon } from "../../utils/moonAlgorithm";
 
 const normFile = (e: any) => {
   console.log("Upload event:", e);
-  // if (Array.isArray(e)) {
-  //   return e;
-  // }
-  // return e?.fileList;
 };
 
 const FormAddCard: React.FC = () => {
@@ -108,7 +104,6 @@ const FormAddCard: React.FC = () => {
           >
             <Input placeholder="" />
           </InputMask>
-          {/* <Input /> */}
         </Form.Item>
 
         <Form.Item
