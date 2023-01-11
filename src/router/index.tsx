@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import Content from "../layouts/content/Content";
 import Header from "../layouts/header/Header";
 import Home from "../pages/home/Home";
+import History from "../pages/history/History";
 import Sidebar from "../layouts/sidebar/Sidebar";
 import Chat from "../components/chat/Chat";
 import { PlayCircleOutlined } from "@ant-design/icons";
@@ -39,7 +40,7 @@ const tabs = [
     name: "История операций",
     url: "/history",
     icon: historyIcon,
-    page: <div style={{ width: "100%" }}>История операций</div>,
+    page: <History />,
   },
 ];
 const RouterApp = () => {

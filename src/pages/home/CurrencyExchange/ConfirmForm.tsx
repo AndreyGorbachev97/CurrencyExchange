@@ -4,7 +4,7 @@ import { useAppSelector } from "../../../hooks/redux";
 import { ICurrency } from "../../../models/currency";
 import { IRequisitesForm } from "../../../models/IRequisitesForm";
 import { cardMskForStr } from "../../../utils/cardMaskForStr";
-import { currencies, ITag, Item } from "../constants";
+import { currencies, ITag, Item } from "../../../utils/constants";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import classes from "./ConfirmForm.module.css";
 

@@ -86,5 +86,8 @@ module.exports = (env) => ({
   resolve:
   {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      actions$: path.resolve(__dirname, 'src/store/reducers/ActionCreators.ts'),
+    },
   }
 })
