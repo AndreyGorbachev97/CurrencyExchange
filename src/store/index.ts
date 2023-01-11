@@ -4,6 +4,7 @@ import authReducer from "./reducers/slices/AuthSlice";
 import cardReducer from "./reducers/slices/CardSlice";
 import registerReducer from "./reducers/slices/RegisterSlice";
 import CurrencyExchangeReducer from "./reducers/slices/CurrencyExchangeSlice";
+import TransactionReducer from "./reducers/slices/TransactionSlice";
 import { chatAPI } from "./services/ChatService";
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   cardReducer,
   registerReducer,
   CurrencyExchangeReducer,
+  TransactionReducer,
   [chatAPI.reducerPath]: chatAPI.reducer,
 });
 

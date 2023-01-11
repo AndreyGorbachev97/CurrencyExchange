@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Input, InputNumber, Segmented } from "antd";
 import classes from "./Home.module.css";
 import { ICurrency } from "../../models/currency";
-import { currencies, ITag, Item } from "./constants";
+import { currencies, ITag, Item } from "../../utils/constants";
 
 const { Search } = Input;
 

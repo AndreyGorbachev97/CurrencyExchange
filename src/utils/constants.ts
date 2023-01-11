@@ -1,20 +1,20 @@
-import qiwi from "../../assets/images/banks/qiwi.svg";
-import zenit from "../../assets/images/banks/zenit.svg";
-import tochka from "../../assets/images/banks/tochka.svg";
-import tinkoff from "../../assets/images/banks/tinkoff.svg";
-import sber from "../../assets/images/banks/sber.svg";
-import btc from "../../assets/images/coins/btc.png";
-import doge from "../../assets/images/coins/doge.png";
-import eth from "../../assets/images/coins/eth.png";
-import ltc from "../../assets/images/coins/ltc.png";
-import xmr from "../../assets/images/coins/xmr.png";
+import qiwi from "../assets/images/banks/qiwi.svg";
+import zenit from "../assets/images/banks/zenit.svg";
+import tochka from "../assets/images/banks/tochka.svg";
+import tinkoff from "../assets/images/banks/tinkoff.svg";
+import sber from "../assets/images/banks/sber.svg";
+import btc from "../assets/images/coins/btc.png";
+import doge from "../assets/images/coins/doge.png";
+import eth from "../assets/images/coins/eth.png";
+import ltc from "../assets/images/coins/ltc.png";
+import xmr from "../assets/images/coins/xmr.png";
 
 export type Item = {
   title: string;
   img?: string;
   type: string;
   name?: string;
-}
+};
 export const currencies: Item[] = [
   {
     title: "Ethereum",
@@ -76,7 +76,7 @@ export const currencies: Item[] = [
     type: "rub",
     name: "RUB",
   },
-]
+];
 
 export interface ITag {
   label: string;
@@ -91,6 +91,4 @@ export const tags = [
   { label: "USD", value: "usd", disabled: false },
   { label: "RUB", value: "rub", disabled: false },
   { label: "UAH", value: "uah", disabled: true },
-]
-
-
+];

@@ -3,7 +3,7 @@ import { Input, Segmented, InputNumber } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "./Home.module.css";
 import { ICurrency } from "../../models/currency";
-import { currencies, ITag, Item } from "./constants";
+import { currencies, ITag, Item } from "../../utils/constants";
 
 const { Search } = Input;
 

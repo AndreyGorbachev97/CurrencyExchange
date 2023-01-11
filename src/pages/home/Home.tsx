@@ -6,7 +6,7 @@ import classes from "./Home.module.css";
 import { ICurrency } from "../../models/currency";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchPriceCurrency } from "../../store/reducers/ActionCreators";
-import { ITag, tags } from "./constants";
+import { ITag, tags } from "../../utils/constants";
 import { IPriceCurrency } from "../../models/IPriceCurrency";
 
 const Home: React.FC = () => {

@@ -2,6 +2,7 @@ import { auth, logout, checkAuth, register } from "./actions/auth";
 import { fetchPriceCurrency } from "./actions/priceCurrency";
 import { sendMessageToChat } from "./actions/chatSupport";
 import { sendCard, checkCard, getCards } from "./actions/bankCard";
+import { getTransactions } from "./actions/transaction";
 
 export {
   auth,
@@ -12,5 +13,6 @@ export {
   sendMessageToChat,
   sendCard,
   checkCard,
-  getCards
+  getCards,
+  getTransactions,
 };
