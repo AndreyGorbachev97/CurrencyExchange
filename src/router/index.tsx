@@ -21,7 +21,7 @@ import historyIcon from "../assets/images/sidebar/history.png";
 import swapIcon from "../assets/images/sidebar/swap.png";
 import classes from "./Route.module.css";
 import Card from "../pages/card/Card";
-import { checkAuth } from "../store/reducers/ActionCreators";
+import { checkAuth, getTransactions } from "../store/reducers/ActionCreators";
 
 const tabs = [
   {
@@ -52,6 +52,15 @@ const RouterApp = () => {
   const isWideWidth = width > 1400;
   const isFullSideBar = isWideWidth && isExpand;
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getTransactions());
+    const interval = setInterval(() => {
+      dispatch(getTransactions());
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     dispatch(checkAuth());

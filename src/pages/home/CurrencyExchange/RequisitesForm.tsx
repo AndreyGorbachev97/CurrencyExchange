@@ -28,6 +28,8 @@ const RequisitesForm: React.FC<propType> = ({
 
   const [form] = Form.useForm();
 
+  const [cardNumber, walletNumber] = form.getFieldsValue()
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

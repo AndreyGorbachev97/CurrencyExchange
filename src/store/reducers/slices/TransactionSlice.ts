@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getTransactions } from "../ActionCreators";
 import { ITransaction } from "../../../models/ITransaction";
+import { notification } from "antd";
+import { isEqual } from "lodash";
 
 interface transactionState {
   transactions: any;
@@ -25,7 +27,18 @@ export const transactionSlice = createSlice({
     ) => {
       state.isLoading = false;
       state.error = "";
-      state.transactions = action.payload.reverse();
+      const transactions = action.payload;
+      if (!isEqual(state.transactions, transactions)) {
+        if (state.transactions.length) {
+          notification.info({
+            message: "История операций",
+            description: "В истории операций появились новые изменения.",
+            duration: 6,
+          });
+        }
+
+        state.transactions = transactions;
+      }
     },
     [getTransactions.pending.type]: (state) => {
       state.isLoading = true;

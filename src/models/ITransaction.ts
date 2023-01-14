@@ -1,4 +1,5 @@
 export interface ITransaction {
+  id: number;
   get_name: string;
   get_value: string;
   give_name: string;

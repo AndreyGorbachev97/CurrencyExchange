@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import React, { useMemo } from "react";
+import { useAppSelector } from "../../hooks/redux";
 import { ITransaction } from "../../models/ITransaction";
-import { getTransactions } from "../../store/reducers/ActionCreators";
 import classes from "./History.module.css";
-import { ITag, tags, currencies, Item } from "../../utils/constants";
+import { currencies, Item } from "../../utils/constants";
 import { cardMskForStr } from "../../utils/cardMaskForStr";
 import { DoubleRightOutlined } from "@ant-design/icons";
+import moment from "moment";
+
+moment.locale("ru");
 
 interface IModTransaction extends ITransaction {
   getInfo: Item;
@@ -16,11 +18,6 @@ const History = () => {
   const { transactions, isLoading } = useAppSelector(
     (state) => state.TransactionReducer
   );
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getTransactions());
-  }, []);
 
   const modTransactions = useMemo(() => {
     return transactions.map((trans: ITransaction) => {
@@ -36,8 +33,11 @@ const History = () => {
       <h1 className={classes.titleHead}>История операций</h1>
 
       {modTransactions.map((trans: IModTransaction) => (
-        <div className={classes.exchange}>
-          <p className={classes.smallText}>{trans.status}</p>
+        <div key={trans.id} className={classes.exchange}>
+          <div className={classes.smallText}>
+            <p>{moment(trans.date_transaction).format("LLL")}</p>
+            <p>{trans.status}</p>
+          </div>
           <div className={classes.exchangeItem}>
             <img
               className={classes.exchangeImg}
