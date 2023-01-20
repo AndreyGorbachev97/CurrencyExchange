@@ -5,6 +5,7 @@ import classes from "./History.module.css";
 import { currencies, Item } from "../../utils/constants";
 import { cardMskForStr } from "../../utils/cardMaskForStr";
 import { DoubleRightOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 moment.locale("ru");
@@ -18,6 +19,8 @@ const History = () => {
   const { transactions, isLoading } = useAppSelector(
     (state) => state.TransactionReducer
   );
+
+  const navigate = useNavigate();
 
   const modTransactions = useMemo(() => {
     return transactions.map((trans: ITransaction) => {
@@ -33,7 +36,11 @@ const History = () => {
       <h1 className={classes.titleHead}>История операций</h1>
 
       {modTransactions.map((trans: IModTransaction) => (
-        <div key={trans.id} className={classes.exchange}>
+        <div
+          key={trans.id}
+          className={classes.exchange}
+          onClick={() => navigate(`/operation/${trans.id}`)}
+        >
           <div className={classes.smallText}>
             <p>{moment(trans.date_transaction).format("LLL")}</p>
             <p>{trans.status}</p>

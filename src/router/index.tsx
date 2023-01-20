@@ -6,11 +6,13 @@ import {
   Link,
   Navigate,
   HashRouter,
+  useParams
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import Content from "../layouts/content/Content";
 import Header from "../layouts/header/Header";
 import Home from "../pages/home/Home";
+import Operation from "../pages/operation/Operation";
 import History from "../pages/history/History";
 import Sidebar from "../layouts/sidebar/Sidebar";
 import Chat from "../components/chat/Chat";
@@ -92,9 +94,12 @@ const RouterApp = () => {
         <Content>
           <Routes>
             {auth ? (
-              tabs.map((item, key) => (
-                <Route key={key} path={item.url} element={item.page} />
-              ))
+              <>
+                {tabs.map((item, key) => (
+                  <Route key={key} path={item.url} element={item.page} />
+                ))}
+                <Route path="/operation/:id" element={<Operation />} />
+              </>
             ) : (
               <Route path="/home" element={<Home />} />
             )}

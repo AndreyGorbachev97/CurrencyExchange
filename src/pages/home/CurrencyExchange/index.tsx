@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "../Home.module.css";
@@ -7,8 +7,9 @@ import AuthForm from "../../../components/forms/AuthFrom";
 import RegisterFrom from "../../../components/forms/RegisterFrom";
 import { ICurrency } from "../../../models/currency";
 import RequisitesForm from "./RequisitesForm";
-import { useAppDispatch } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { currencyExchange } from "../../../store/reducers/actions/currencyExchange";
+import { useNavigate } from "react-router-dom";
 
 type propType = {
   course: string;
@@ -25,6 +26,21 @@ const CurrencyExchange: React.FC<propType> = ({
   auth,
   user,
 }: propType) => {
+  const { currencyExchange: currencyExchangeData } = useAppSelector(
+    (state) => state.CurrencyExchangeReducer
+  );
+
+  // const navigate = useNavigate();
+
+  // const currencyExchangeID = useMemo(
+  //   () => currencyExchangeData?.data?.id,
+  //   [currencyExchangeData?.data?.id]
+  // );
+  // useEffect(() => {
+  //   console.log("currencyExchangeID", currencyExchangeID);
+  //   currencyExchangeID && navigate(`operation/${currencyExchangeID}`);
+  // }, [currencyExchangeID]);
+
   const dispatch = useAppDispatch();
   let coin = getCurrency;
   let price = giveCurrency;

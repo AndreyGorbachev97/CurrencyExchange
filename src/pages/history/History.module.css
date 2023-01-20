@@ -108,6 +108,7 @@
   margin-bottom: 12px;
   background-color: #f4f5f7;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .exchangeItem {
