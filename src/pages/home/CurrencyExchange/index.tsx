@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Input, Segmented, Button, Checkbox, Form } from "antd";
 import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
 import classes from "../Home.module.css";
@@ -30,16 +30,13 @@ const CurrencyExchange: React.FC<propType> = ({
     (state) => state.CurrencyExchangeReducer
   );
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const currencyExchangeID = useMemo(
-  //   () => currencyExchangeData?.data?.id,
-  //   [currencyExchangeData?.data?.id]
-  // );
-  // useEffect(() => {
-  //   console.log("currencyExchangeID", currencyExchangeID);
-  //   currencyExchangeID && navigate(`operation/${currencyExchangeID}`);
-  // }, [currencyExchangeID]);
+  useEffect(() => {
+    console.log("currencyExchangeID", currencyExchangeData?.data?.id);
+    currencyExchangeData?.data?.id &&
+      navigate(`/operation/${currencyExchangeData?.data.id}`);
+  }, [currencyExchangeData]);
 
   const dispatch = useAppDispatch();
   let coin = getCurrency;
@@ -57,7 +54,6 @@ const CurrencyExchange: React.FC<propType> = ({
       give_name: giveCurrency.title,
       give_value: giveCurrency.value,
     };
-
     dispatch(currencyExchange(data));
   };
 

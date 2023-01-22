@@ -26,3 +26,46 @@
   color: #575757;
   margin-bottom: 48px;
 }
+
+.exchange {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #f4f5f7;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.exchangeItem {
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* font-size: 14px; */
+  font-family: "InterLight";
+}
+
+.exchangeImg {
+  margin-right: 8px;
+}
+
+.exchangeMedium {
+  font-family: "InterMedium";
+}
+
+.exchangeArrow {
+  margin: 0 auto;
+  font-size: 20px;
+  color: #8b8b8b;
+}
+
+.smallText {
+  color: #667085;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  padding-right: 8px;
+}
