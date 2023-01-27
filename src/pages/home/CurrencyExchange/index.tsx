@@ -30,12 +30,14 @@ const CurrencyExchange: React.FC<propType> = ({
     (state) => state.CurrencyExchangeReducer
   );
 
+  const [isRedirect, setIsRedirect] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("currencyExchangeID", currencyExchangeData?.data?.id);
-    currencyExchangeData?.data?.id &&
+    if (currencyExchangeData?.data?.id && isRedirect) {
       navigate(`/operation/${currencyExchangeData?.data.id}`);
+    }
   }, [currencyExchangeData]);
 
   const dispatch = useAppDispatch();
@@ -55,6 +57,7 @@ const CurrencyExchange: React.FC<propType> = ({
       give_value: giveCurrency.value,
     };
     dispatch(currencyExchange(data));
+    setIsRedirect(true);
   };
 
   return (

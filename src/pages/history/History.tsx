@@ -17,7 +17,7 @@ interface IModTransaction extends ITransaction {
 
 const History = () => {
   const { transactions, isLoading } = useAppSelector(
-    (state) => state.TransactionReducer
+    (state) => state.TransactionsReducer
   );
 
   const navigate = useNavigate();

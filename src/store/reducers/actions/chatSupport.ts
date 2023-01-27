@@ -6,7 +6,6 @@ export const sendMessageToChat = createAsyncThunk(
   "sendMessage",
   async (message: string, thunkAPI) => {
     try {
-      console.log("message", message);
       axios.get(`${TELEGRAM_URL}${message}`);
     } catch (e) {
       return thunkAPI.rejectWithValue("Ошибка");

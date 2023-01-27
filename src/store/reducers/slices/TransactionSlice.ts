@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getTransactions } from "../ActionCreators";
+import { getTransaction, getTransactions } from "../ActionCreators";
 import { ITransaction } from "../../../models/ITransaction";
 import { notification } from "antd";
 import { isEqual } from "lodash";
@@ -36,7 +36,6 @@ export const transactionSlice = createSlice({
             duration: 6,
           });
         }
-
         state.transactions = transactions;
       }
     },

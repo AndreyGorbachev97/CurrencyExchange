@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import classes from "./Operation.module.css";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { ITransaction } from "../../models/ITransaction";
 import { currencies, Item } from "../../utils/constants";
 import { DoubleRightOutlined } from "@ant-design/icons";
@@ -12,6 +12,7 @@ import Accepted from "./statusComponents/Accepted";
 import Payment from "./statusComponents/Payment";
 import Success from "./statusComponents/Success";
 import Rejected from "./statusComponents/Rejected";
+import { getTransaction } from "../../store/reducers/ActionCreators";
 
 interface IComponentByStatus {
   created: React.ReactElement;
@@ -31,76 +32,85 @@ const componentByStatus: IComponentByStatus = {
 const Operation = () => {
   const { id } = useParams();
 
-  const { transactions, isLoading } = useAppSelector(
+  const dispatch = useAppDispatch();
+
+  const { transaction, isLoading: isLoadingTransaction } = useAppSelector(
     (state) => state.TransactionReducer
   );
 
-  const currentTransaction = useMemo(() => {
-    return transactions.find((item: ITransaction) => item.id === +id);
-  }, [transactions]);
+  const [item] = transaction;
+  console.log("transaction", item);
+
+  useEffect(() => {
+    dispatch(getTransaction(id));
+  }, []);
 
   const modTransaction = useMemo(() => {
-    const getInfo = currencies.find(
-      (cur) => cur.title === currentTransaction.get_name
-    );
-    const giveInfo = currencies.find(
-      (cur) => cur.title === currentTransaction.give_name
-    );
-    return { ...currentTransaction, getInfo, giveInfo };
-  }, [currentTransaction]);
+    if (!item) return null;
+    const getInfo = currencies.find((cur) => cur.title === item.get_name);
+    const giveInfo = currencies.find((cur) => cur.title === item.give_name);
+    return { ...item, getInfo, giveInfo };
+  }, [item]);
 
   return (
     <div className={classes.container}>
       <h1 className={classes.titleHead}>{`Операция №${id}`}</h1>
-
-      <div className={classes.exchange}>
-        <div className={classes.exchangeItem}>
-          <img
-            className={classes.exchangeImg}
-            src={modTransaction.giveInfo.img}
-            alt={modTransaction.giveInfo.type}
-          />
-          <div>
-            Сумма{" "}
-            <span className={classes.exchangeMedium}>
-              {`${modTransaction.give_value} ${modTransaction.giveInfo.name}`}
-            </span>
-            <div>{`C ${
-              modTransaction.giveInfo.type === "coin"
-                ? modTransaction.walletNumber
-                : cardMskForStr(modTransaction.cardNumber.toString())
-            }`}</div>
-          </div>
-        </div>
-        <DoubleRightOutlined className={classes.exchangeArrow} />
-        <div className={classes.exchangeItem}>
-          <img
-            className={classes.exchangeImg}
-            src={modTransaction.getInfo.img}
-            alt={modTransaction.getInfo.type}
-          />
-          <div>
-            <div>
-              Сумма{" "}
-              <span className={classes.exchangeMedium}>
-                {`${modTransaction.get_value} ${modTransaction.getInfo.name}`}
-              </span>
+      {isLoadingTransaction && <div>Загрузка...</div>}
+      {modTransaction && (
+        <>
+          <div className={classes.exchange}>
+            <div className={classes.exchangeItem}>
+              <img
+                className={classes.exchangeImg}
+                src={modTransaction.giveInfo.img}
+                alt={modTransaction.giveInfo.type}
+              />
+              <div>
+                Сумма{" "}
+                <span className={classes.exchangeMedium}>
+                  {`${modTransaction.give_value} ${modTransaction.giveInfo.name}`}
+                </span>
+                <div>{`C ${
+                  modTransaction.giveInfo.type === "coin"
+                    ? modTransaction.walletNumber
+                    : cardMskForStr(modTransaction.cardNumber.toString())
+                }`}</div>
+              </div>
             </div>
-            <div>{`На ${
-              modTransaction.getInfo.type === "coin"
-                ? modTransaction.walletNumber
-                : cardMskForStr(modTransaction.cardNumber.toString())
-            }`}</div>
+            <DoubleRightOutlined className={classes.exchangeArrow} />
+            <div className={classes.exchangeItem}>
+              <img
+                className={classes.exchangeImg}
+                src={modTransaction.getInfo.img}
+                alt={modTransaction.getInfo.type}
+              />
+              <div>
+                <div>
+                  Сумма{" "}
+                  <span className={classes.exchangeMedium}>
+                    {`${modTransaction.get_value} ${modTransaction.getInfo.name}`}
+                  </span>
+                </div>
+                <div>{`На ${
+                  modTransaction.getInfo.type === "coin"
+                    ? modTransaction.walletNumber
+                    : cardMskForStr(modTransaction.cardNumber.toString())
+                }`}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className={classes.smallText}>
-        <p>{`Дата обновления операции: ${moment(
-          modTransaction.date_transaction
-        ).format("LLL")}`}</p>
-        {componentByStatus[modTransaction.status as keyof IComponentByStatus]}
-      </div>
+          <div className={classes.smallText}>
+            <p>{`Дата обновления операции: ${moment(
+              modTransaction.date_transaction
+            ).format("LLL")}`}</p>
+            {
+              componentByStatus[
+                modTransaction.status as keyof IComponentByStatus
+              ]
+            }
+          </div>
+        </>
+      )}
     </div>
   );
 };
