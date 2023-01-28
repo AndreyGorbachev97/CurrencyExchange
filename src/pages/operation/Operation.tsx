@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classes from "./Operation.module.css";
 import { useParams } from "react-router-dom";
+import { Tag } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { ITransaction } from "../../models/ITransaction";
 import { currencies, Item } from "../../utils/constants";
 import { DoubleRightOutlined } from "@ant-design/icons";
 import { cardMskForStr } from "../../utils/cardMaskForStr";
@@ -13,6 +13,8 @@ import Payment from "./statusComponents/Payment";
 import Success from "./statusComponents/Success";
 import Rejected from "./statusComponents/Rejected";
 import { getTransaction } from "../../store/reducers/ActionCreators";
+import StatusHOC from "./statusComponents/StatusHOC";
+import { statuses } from "../../utils/statuses";
 
 interface IComponentByStatus {
   created: React.ReactElement;
@@ -34,15 +36,24 @@ const Operation = () => {
 
   const dispatch = useAppDispatch();
 
+  const [isRerender, setIsRerender] = useState(true);
   const { transaction, isLoading: isLoadingTransaction } = useAppSelector(
     (state) => state.TransactionReducer
   );
 
   const [item] = transaction;
-  console.log("transaction", item);
+
+  useEffect(() => {
+    isLoadingTransaction && setIsRerender(false);
+  }, [isLoadingTransaction]);
 
   useEffect(() => {
     dispatch(getTransaction(id));
+    const interval = setInterval(() => {
+      dispatch(getTransaction(id));
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const modTransaction = useMemo(() => {
@@ -54,8 +65,19 @@ const Operation = () => {
 
   return (
     <div className={classes.container}>
-      <h1 className={classes.titleHead}>{`Операция №${id}`}</h1>
-      {isLoadingTransaction && <div>Загрузка...</div>}
+      <h1 className={classes.titleHead}>
+        <div className={classes.titleText}>{`Операция №${id}`}</div>
+
+        {modTransaction && (
+          <Tag
+            color={
+              statuses[modTransaction?.status as keyof typeof statuses].color
+            }
+          >
+            {statuses[modTransaction?.status as keyof typeof statuses].text}
+          </Tag>
+        )}
+      </h1>
       {modTransaction && (
         <>
           <div className={classes.exchange}>
@@ -103,11 +125,13 @@ const Operation = () => {
             <p>{`Дата обновления операции: ${moment(
               modTransaction.date_transaction
             ).format("LLL")}`}</p>
-            {
-              componentByStatus[
-                modTransaction.status as keyof IComponentByStatus
-              ]
-            }
+            <StatusHOC transaction={modTransaction}>
+              {
+                componentByStatus[
+                  modTransaction.status as keyof IComponentByStatus
+                ]
+              }
+            </StatusHOC>
           </div>
         </>
       )}

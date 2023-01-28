@@ -18,6 +18,8 @@
 }
 
 .titleHead {
+  display: flex;
+  align-items: center;
   font-family: "InterMedium";
   font-style: normal;
   font-weight: 500;
@@ -25,6 +27,10 @@
   line-height: 42px;
   color: #575757;
   margin-bottom: 48px;
+}
+
+.titleText {
+  margin-right: 6px;
 }
 
 .exchange {
@@ -52,6 +58,10 @@
 
 .exchangeMedium {
   font-family: "InterMedium";
+}
+
+.exchangeBold {
+  font-family: "InterBold";
 }
 
 .exchangeArrow {

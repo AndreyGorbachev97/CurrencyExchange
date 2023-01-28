@@ -8,4 +8,6 @@ export interface ITransaction {
   walletNumber: string;
   status: string;
   date_transaction?: string;
+  time_reject?: string;
+  target_user?: string;
 }
