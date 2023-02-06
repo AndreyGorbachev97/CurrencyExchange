@@ -61,15 +61,6 @@ const FormAddCard: React.FC = () => {
         setFileList(file);
         return false;
       },
-      // onRemove: (file: UploadFile) => {
-      //   if (fileList.some((item: any) => item.uid === file.uid)) {
-      //     setFileList((fileList: any) =>
-      //       fileList.filter((item: any) => item.uid !== file.uid)
-      //     );
-      //     return true;
-      //   }
-      //   return false;
-      // },
     }),
     [fileList]
   );

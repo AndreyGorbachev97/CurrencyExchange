@@ -70,6 +70,10 @@
   color: #8b8b8b;
 }
 
+.mb {
+  margin-bottom: 32px;
+}
+
 .smallText {
   color: #667085;
   font-family: "Inter";
@@ -78,4 +82,11 @@
   font-size: 14px;
   line-height: 20px;
   padding-right: 8px;
+}
+
+.qrCode {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
 }

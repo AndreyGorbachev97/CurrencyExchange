@@ -1,9 +1,15 @@
 import React from "react";
+import { ITransaction } from "../../../models/ITransaction";
 
-const Rejected = () => {
+type propType = {
+  transaction: ITransaction;
+};
+
+const Rejected: React.FC = ({ transaction }: propType) => {
+  console.log("transaction", transaction);
   return (
     <div>
-      <p>Транзакция не совершена, причина - ...</p>
+      <p>Транзакция не совершена, причина - {transaction.reject_reason}</p>
     </div>
   );
 };

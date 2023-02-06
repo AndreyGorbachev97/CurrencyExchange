@@ -2,12 +2,24 @@ import React from "react";
 import { ITransaction } from "../../../models/ITransaction";
 import classes from "../Operation.module.css";
 import moment from "moment";
+import { Button } from "antd";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { approvePaymentTransaction } from "../../../store/reducers/ActionCreators";
 
 type propType = {
   transaction: ITransaction;
 };
 
 const Accepted: React.FC = ({ transaction }: propType) => {
+  const { resApprovePayment, approvePaymentIsLoading } = useAppSelector(
+    (state) => state.TransactionReducer
+  );
+  const dispatch = useAppDispatch();
+
+  const onApprovePayment = () => {
+    transaction.id && dispatch(approvePaymentTransaction(transaction.id));
+  };
+
   return (
     <div>
       <p>
@@ -23,15 +35,31 @@ const Accepted: React.FC = ({ transaction }: propType) => {
           {`${transaction.give_value} ${transaction.give_name}`}
         </span>{" "}
         в ручном режиме по следующему номеру {``}
-        <span className={classes.exchangeBold}>
-          {`${transaction.target_user}`}
-        </span>
+        {transaction.qr_crypto_url ? (
+          <div className={classes.qrCode}>
+            <img src={transaction.qr_crypto_url} alt="qr code" />
+          </div>
+        ) : (
+          <span className={classes.exchangeBold}>
+            {`${transaction.target_user}`}
+          </span>
+        )}
       </p>
-      <p>
+      <p className={classes.mb}>
         После получения оплаты, статус вашей заявки будет изменен на "Заявка
         оплачена, ожидайте совершения обмена". В противном случае через 30 минут
         заявка будет отменена.
       </p>
+      <Button
+        style={{ marginBottom: "8px" }}
+        size="large"
+        type="primary"
+        loading={approvePaymentIsLoading}
+        onClick={onApprovePayment}
+        disabled={transaction.check_user}
+      >
+        Я оплатил
+      </Button>
     </div>
   );
 };

@@ -25,3 +25,17 @@ export const getTransaction = createAsyncThunk(
     }
   }
 );
+
+export const approvePaymentTransaction = createAsyncThunk(
+  "approvePaymentTransaction",
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await $api.post(`checkUser/${id}`, {
+        check_user: true,
+      });
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);

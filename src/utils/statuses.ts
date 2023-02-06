@@ -9,7 +9,7 @@ export const statuses = {
   },
   payment: {
     text: "Оплачена",
-    color: "#ffec3d",
+    color: "gold",
   },
   success: {
     text: "Завершена",

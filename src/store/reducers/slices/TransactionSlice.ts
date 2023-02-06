@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getTransaction, getTransactions } from "../ActionCreators";
+import { getTransactions } from "../ActionCreators";
 import { ITransaction } from "../../../models/ITransaction";
 import { notification } from "antd";
 import { isEqual } from "lodash";

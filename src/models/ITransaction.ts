@@ -10,4 +10,7 @@ export interface ITransaction {
   date_transaction?: string;
   time_reject?: string;
   target_user?: string;
+  reject_reason?: string;
+  check_user?: boolean;
+  qr_crypto_url?: string;
 }
