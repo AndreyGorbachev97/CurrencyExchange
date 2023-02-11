@@ -3,7 +3,7 @@ import { getCards } from "../ActionCreators";
 import { ICard } from "../../../models/ICard";
 
 interface cardState {
-  cards: any;
+  cards: ICard[];
   isLoading: boolean;
   error: string;
 }

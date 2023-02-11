@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import classes from "./Operation.module.css";
 import { useParams } from "react-router-dom";
-import { Tag } from "antd";
+import { Tag, Spin } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { currencies, Item } from "../../utils/constants";
 import { DoubleRightOutlined } from "@ant-design/icons";
@@ -36,7 +36,8 @@ const Operation = () => {
 
   const dispatch = useAppDispatch();
 
-  const [isRerender, setIsRerender] = useState(true);
+  const [isOneLoading, setIsOneLoading] = useState(false);
+  const [isRenderLoading, setIsRenderLoading] = useState(true);
   const { transaction, isLoading: isLoadingTransaction } = useAppSelector(
     (state) => state.TransactionReducer
   );
@@ -44,7 +45,13 @@ const Operation = () => {
   const [item] = transaction;
 
   useEffect(() => {
-    isLoadingTransaction && setIsRerender(false);
+    if (isLoadingTransaction && !isOneLoading) {
+      setIsOneLoading(true);
+      setIsRenderLoading(true);
+    }
+    if (!isLoadingTransaction) {
+      setIsRenderLoading(false);
+    }
   }, [isLoadingTransaction]);
 
   useEffect(() => {
@@ -68,7 +75,7 @@ const Operation = () => {
       <h1 className={classes.titleHead}>
         <div className={classes.titleText}>{`Операция №${id}`}</div>
 
-        {modTransaction && (
+        {modTransaction && !isRenderLoading && (
           <Tag
             color={
               statuses[modTransaction?.status as keyof typeof statuses].color
@@ -78,63 +85,72 @@ const Operation = () => {
           </Tag>
         )}
       </h1>
-      {modTransaction && (
-        <>
-          <div className={classes.exchange}>
-            <div className={classes.exchangeItem}>
-              <img
-                className={classes.exchangeImg}
-                src={modTransaction.giveInfo.img}
-                alt={modTransaction.giveInfo.type}
-              />
-              <div>
-                Сумма{" "}
-                <span className={classes.exchangeMedium}>
-                  {`${modTransaction.give_value} ${modTransaction.giveInfo.name}`}
-                </span>
-                <div>{`C ${
-                  modTransaction.giveInfo.type === "coin"
-                    ? modTransaction.walletNumber
-                    : cardMskForStr(modTransaction.cardNumber.toString())
-                }`}</div>
-              </div>
-            </div>
-            <DoubleRightOutlined className={classes.exchangeArrow} />
-            <div className={classes.exchangeItem}>
-              <img
-                className={classes.exchangeImg}
-                src={modTransaction.getInfo.img}
-                alt={modTransaction.getInfo.type}
-              />
-              <div>
-                <div>
-                  Сумма{" "}
-                  <span className={classes.exchangeMedium}>
-                    {`${modTransaction.get_value} ${modTransaction.getInfo.name}`}
-                  </span>
+      <>
+        {isRenderLoading ? (
+          <div className={classes.exchangeSpinContainer}>
+            <Spin size="large" />
+          </div>
+          
+        ) : (
+          modTransaction && (
+            <>
+              <div className={classes.exchange}>
+                <div className={classes.exchangeItem}>
+                  <img
+                    className={classes.exchangeImg}
+                    src={modTransaction.giveInfo.img}
+                    alt={modTransaction.giveInfo.type}
+                  />
+                  <div>
+                    Сумма{" "}
+                    <span className={classes.exchangeMedium}>
+                      {`${modTransaction.give_value} ${modTransaction.giveInfo.name}`}
+                    </span>
+                    <div>{`C ${
+                      modTransaction.giveInfo.type === "coin"
+                        ? modTransaction.walletNumber
+                        : cardMskForStr(modTransaction.cardNumber.toString())
+                    }`}</div>
+                  </div>
                 </div>
-                <div>{`На ${
-                  modTransaction.getInfo.type === "coin"
-                    ? modTransaction.walletNumber
-                    : cardMskForStr(modTransaction.cardNumber.toString())
-                }`}</div>
+                <DoubleRightOutlined className={classes.exchangeArrow} />
+                <div className={classes.exchangeItem}>
+                  <img
+                    className={classes.exchangeImg}
+                    src={modTransaction.getInfo.img}
+                    alt={modTransaction.getInfo.type}
+                  />
+                  <div>
+                    <div>
+                      Сумма{" "}
+                      <span className={classes.exchangeMedium}>
+                        {`${modTransaction.get_value} ${modTransaction.getInfo.name}`}
+                      </span>
+                    </div>
+                    <div>{`На ${
+                      modTransaction.getInfo.type === "coin"
+                        ? modTransaction.walletNumber
+                        : cardMskForStr(modTransaction.cardNumber.toString())
+                    }`}</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className={classes.smallText}>
-            <p>{`Дата обновления операции: ${moment(
-              modTransaction.date_transaction
-            ).format("LLL")}`}</p>
-            <StatusHOC transaction={modTransaction}>
-              {
-                componentByStatus[
-                  modTransaction.status as keyof IComponentByStatus
-                ]
-              }
-            </StatusHOC>
-          </div>
-        </>
-      )}
+              <div className={classes.smallText}>
+                <p>{`Дата обновления операции: ${moment(
+                  modTransaction.date_transaction
+                ).format("LLL")}`}</p>
+                <StatusHOC transaction={modTransaction}>
+                  {
+                    componentByStatus[
+                      modTransaction.status as keyof IComponentByStatus
+                    ]
+                  }
+                </StatusHOC>
+              </div>
+            </>
+          )
+        )}
+      </>
     </div>
   );
 };

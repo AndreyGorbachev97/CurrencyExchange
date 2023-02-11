@@ -5,9 +5,23 @@ import moment from "moment";
 import { Button } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { approvePaymentTransaction } from "../../../store/reducers/ActionCreators";
+import { cardMskForStr } from "../../../utils/cardMaskForStr";
+
+interface IModTransaction extends ITransaction {
+  giveInfo: {
+    img: string;
+    name: string;
+    title: string;
+  };
+  getInfo: {
+    img: string;
+    name: string;
+    title: string;
+  };
+}
 
 type propType = {
-  transaction: ITransaction;
+  transaction: IModTransaction;
 };
 
 const Accepted: React.FC = ({ transaction }: propType) => {
@@ -29,22 +43,22 @@ const Accepted: React.FC = ({ transaction }: propType) => {
         ).format("LLL")}.`}</span>
       </p>
 
-      <p>
+      <div>
         Для совершения обмена необходимо осуществить перевод{" "}
         <span className={classes.exchangeBold}>
-          {`${transaction.give_value} ${transaction.give_name}`}
+          {`${transaction.give_value} ${transaction.giveInfo.name}`}
         </span>{" "}
         в ручном режиме по следующему номеру {``}
-        {transaction.qr_crypto_url ? (
+        {transaction.qr_crypto_url && transaction.qr_crypto_url !== "no qr" ? (
           <div className={classes.qrCode}>
             <img src={transaction.qr_crypto_url} alt="qr code" />
           </div>
         ) : (
           <span className={classes.exchangeBold}>
-            {`${transaction.target_user}`}
+            {`${cardMskForStr(transaction.target_user)}`}
           </span>
         )}
-      </p>
+      </div>
       <p className={classes.mb}>
         После получения оплаты, статус вашей заявки будет изменен на "Заявка
         оплачена, ожидайте совершения обмена". В противном случае через 30 минут

@@ -70,6 +70,12 @@
   color: #8b8b8b;
 }
 
+.exchangeSpinContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
 .mb {
   margin-bottom: 32px;
 }
