@@ -8,7 +8,6 @@ import RequisitesForm from "./RequisitesForm";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { currencyExchange } from "../../../store/reducers/actions/currencyExchange";
 import { useNavigate } from "react-router-dom";
-import Message from "../../../components/Message";
 import { isNotEmptyObject } from "../../../utils/isNotEmptyObject";
 
 type propType = {
@@ -23,14 +22,12 @@ const CurrencyExchange: React.FC<propType> = ({
   course,
   giveCurrency,
   getCurrency,
-  auth,
   user,
 }: propType) => {
   const { currencyExchange: currencyExchangeData } = useAppSelector(
     (state) => state.CurrencyExchangeReducer
   );
 
-  const [isShow, setIsShow] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
   const navigate = useNavigate();
@@ -63,13 +60,6 @@ const CurrencyExchange: React.FC<propType> = ({
 
   return (
     <div>
-      <Message
-        isShow={isShow}
-        description={
-          'Письмо для подтверждения профиля отправлено на указанную электронную почту. Если оно не отображается, проверьте папку "Спам"'
-        }
-        message={"Обратите внимание!"}
-      />
       <div className={classes.header}>
         <div>Курс</div>
       </div>
@@ -109,7 +99,7 @@ const CurrencyExchange: React.FC<propType> = ({
               <AuthForm />
             </ModalComponent>
             <ModalComponent title="Регистрация" buttonName="Зарегистрироваться">
-              <RegisterFrom setIsShow={setIsShow} />
+              <RegisterFrom />
             </ModalComponent>
           </div>
         </>
