@@ -7,7 +7,6 @@ import { ICurrency } from "../../models/currency";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchPriceCurrency } from "../../store/reducers/ActionCreators";
 import { ITag, tags } from "../../utils/constants";
-import { IPriceCurrency } from "../../models/IPriceCurrency";
 
 const Home: React.FC = () => {
   const initCurrency: ICurrency = {
@@ -24,10 +23,13 @@ const Home: React.FC = () => {
   const [course, setCourse] = useState(null);
 
   const dispatch = useAppDispatch();
-  const { priceCurrency, isLoading, error } = useAppSelector(
+  const { priceCurrency } = useAppSelector(
     (state) => state.priceCurrencyReducer
   );
-  const { auth, user } = useAppSelector((state) => state.authReducer);
+  const {
+    auth,
+    user,
+  } = useAppSelector((state) => state.authReducer);
 
   const changeGiveCurrency = (item: ICurrency) => {
     const mapTags = tags.map((tag: ITag) => {

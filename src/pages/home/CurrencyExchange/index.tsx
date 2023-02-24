@@ -1,6 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Input, Segmented, Button, Checkbox, Form } from "antd";
-import { SlackOutlined, RetweetOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
 import classes from "../Home.module.css";
 import ModalComponent from "../../../components/Modal";
 import AuthForm from "../../../components/forms/AuthFrom";
@@ -10,6 +8,8 @@ import RequisitesForm from "./RequisitesForm";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { currencyExchange } from "../../../store/reducers/actions/currencyExchange";
 import { useNavigate } from "react-router-dom";
+import Message from "../../../components/Message";
+import { isNotEmptyObject } from "../../../utils/isNotEmptyObject";
 
 type propType = {
   course: string;
@@ -30,6 +30,7 @@ const CurrencyExchange: React.FC<propType> = ({
     (state) => state.CurrencyExchangeReducer
   );
 
+  const [isShow, setIsShow] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
   const navigate = useNavigate();
@@ -62,6 +63,13 @@ const CurrencyExchange: React.FC<propType> = ({
 
   return (
     <div>
+      <Message
+        isShow={isShow}
+        description={
+          'Письмо для подтверждения профиля отправлено на указанную электронную почту. Если оно не отображается, проверьте папку "Спам"'
+        }
+        message={"Обратите внимание!"}
+      />
       <div className={classes.header}>
         <div>Курс</div>
       </div>
@@ -77,7 +85,7 @@ const CurrencyExchange: React.FC<propType> = ({
           <span className={classes.middleText}>Выберите вариант обмена.</span>
         )}
       </div>
-      {auth && (
+      {isNotEmptyObject(user) ? (
         <div className={classes.exchangeRates}>
           <RequisitesForm
             getCurrency={getCurrency}
@@ -88,8 +96,7 @@ const CurrencyExchange: React.FC<propType> = ({
             }
           />
         </div>
-      )}
-      {!auth && (
+      ) : (
         <>
           <div className={classes.infoBlock}>
             <div className={classes.smallText}>
@@ -102,7 +109,7 @@ const CurrencyExchange: React.FC<propType> = ({
               <AuthForm />
             </ModalComponent>
             <ModalComponent title="Регистрация" buttonName="Зарегистрироваться">
-              <RegisterFrom />
+              <RegisterFrom setIsShow={setIsShow} />
             </ModalComponent>
           </div>
         </>

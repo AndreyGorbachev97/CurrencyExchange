@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
-import { Input, Segmented, Button, Checkbox, Form, Alert, Spin } from "antd";
+import { Input, Button, Form, Alert, Spin } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { register } from "../../store/reducers/ActionCreators";
 import classes from "./Form.module.css";
 
 type propType = {
   handleCancel: () => void;
+  setIsShow: (isShow: boolean) => void;
 };
 
-const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
+const RegisterFrom: React.FC<Partial<propType>> = ({
+  handleCancel,
+  setIsShow,
+}: propType) => {
   const dispatch = useAppDispatch();
   const {
     register: data,
@@ -16,19 +20,14 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
     error,
   } = useAppSelector((state) => state.registerReducer);
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-    dispatch(register(values));
+  const onFinish = async (values: any) => {
+    await dispatch(register(values));
+    setIsShow(true);
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
-  useEffect(() => {
-    console.log("DATA", data);
-    data && handleCancel();
-  }, [data]);
 
   return (
     <div>

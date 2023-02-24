@@ -25,7 +25,7 @@ type propType = {
 };
 
 const Accepted: React.FC = ({ transaction }: propType) => {
-  const { resApprovePayment, approvePaymentIsLoading } = useAppSelector(
+  const { approvePaymentIsLoading } = useAppSelector(
     (state) => state.TransactionReducer
   );
   const dispatch = useAppDispatch();
@@ -48,7 +48,9 @@ const Accepted: React.FC = ({ transaction }: propType) => {
         <span className={classes.exchangeBold}>
           {`${transaction.give_value} ${transaction.giveInfo.name}`}
         </span>{" "}
-        в ручном режиме по следующему номеру {``}
+        в ручном режиме по следующему номеру{" "}
+        <span className={classes.exchangeBold}>{transaction.target_user}</span>{" "}
+        {``}
         {transaction.qr_crypto_url && transaction.qr_crypto_url !== "no qr" ? (
           <div className={classes.qrCode}>
             <img src={transaction.qr_crypto_url} alt="qr code" />

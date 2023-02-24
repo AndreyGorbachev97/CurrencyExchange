@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  HashRouter,
-  useParams
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import Content from "../layouts/content/Content";
 import Header from "../layouts/header/Header";
@@ -16,7 +8,6 @@ import Operation from "../pages/operation/Operation";
 import History from "../pages/history/History";
 import Sidebar from "../layouts/sidebar/Sidebar";
 import Chat from "../components/chat/Chat";
-import { PlayCircleOutlined } from "@ant-design/icons";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import cardsIcon from "../assets/images/sidebar/cards.png";
 import historyIcon from "../assets/images/sidebar/history.png";
@@ -24,6 +15,8 @@ import swapIcon from "../assets/images/sidebar/swap.png";
 import classes from "./Route.module.css";
 import Card from "../pages/card/Card";
 import { checkAuth, getTransactions } from "../store/reducers/ActionCreators";
+import { isNotEmptyObject } from "../utils/isNotEmptyObject";
+import { Spin } from "antd";
 
 const tabs = [
   {
@@ -65,6 +58,7 @@ const RouterApp = () => {
   }, []);
 
   useEffect(() => {
+    console.log("checkAuth", checkAuth);
     dispatch(checkAuth());
   }, [auth]);
 
@@ -81,32 +75,49 @@ const RouterApp = () => {
       <Header />
       <Chat />
       <div className={classes.container}>
-        {auth && (
-          <Sidebar
-            user={user}
-            tabs={tabs}
-            isFullSideBar={isFullSideBar}
-            isExpand={isExpand}
-            isWideWidth={isWideWidth}
-            setExpand={setIsExpand}
-          />
-        )}
-        <Content>
-          <Routes>
-            {auth ? (
-              <>
-                {tabs.map((item, key) => (
-                  <Route key={key} path={item.url} element={item.page} />
-                ))}
-                <Route path="/operation/:id" element={<Operation />} />
-              </>
-            ) : (
-              <Route path="/home" element={<Home />} />
+        {isLoading ? (
+          <div
+            className={classes.spinContainer}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh",
+              width: "100%",
+            }}
+          >
+            <Spin size="large" />
+          </div>
+        ) : (
+          <>
+            {isNotEmptyObject(user) && (
+              <Sidebar
+                user={user}
+                tabs={tabs}
+                isFullSideBar={isFullSideBar}
+                isExpand={isExpand}
+                isWideWidth={isWideWidth}
+                setExpand={setIsExpand}
+              />
             )}
+            <Content>
+              <Routes>
+                {isNotEmptyObject(user) ? (
+                  <>
+                    {tabs.map((item, key) => (
+                      <Route key={key} path={item.url} element={item.page} />
+                    ))}
+                    <Route path="/operation/:id" element={<Operation />} />
+                  </>
+                ) : (
+                  <Route path="/home" element={<Home />} />
+                )}
 
-            <Route path="*" element={<Navigate to="/home" replace />} />
-          </Routes>
-        </Content>
+                <Route path="*" element={<Navigate to="/home" replace />} />
+              </Routes>
+            </Content>
+          </>
+        )}
       </div>
     </div>
   );

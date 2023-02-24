@@ -6,8 +6,8 @@ import { ITokenDecode } from "../../../models/ITokenDecode";
 
 export const logout = createAsyncThunk("logout", async (_, thunkAPI) => {
   try {
-    const auth = localStorage.setItem("accessToken", "");
-    return auth;
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("refreshToken", "");
   } catch (e) {
     return thunkAPI.rejectWithValue("Ошибка выхода");
   }
