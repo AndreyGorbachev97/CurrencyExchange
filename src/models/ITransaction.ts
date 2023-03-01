@@ -13,4 +13,5 @@ export interface ITransaction {
   reject_reason?: string;
   check_user?: boolean;
   qr_crypto_url?: string;
+  comment?: string;
 }
