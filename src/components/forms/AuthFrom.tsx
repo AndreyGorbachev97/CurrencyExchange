@@ -3,6 +3,7 @@ import { Input, Segmented, Button, Checkbox, Form, Alert, Spin } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { auth } from "../../store/reducers/ActionCreators";
 import classes from "./Form.module.css";
+import { isNotEmptyObject } from "../../utils/isNotEmptyObject";
 
 type propType = {
   handleCancel: () => void;
@@ -25,7 +26,7 @@ const AuthForm: React.FC = ({ handleCancel }: propType) => {
   };
 
   useEffect(() => {
-    data && handleCancel();
+    isNotEmptyObject(data) && handleCancel();
   }, [data]);
 
   return (

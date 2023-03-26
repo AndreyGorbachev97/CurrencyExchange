@@ -18,10 +18,7 @@ export const cardSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [currencyExchange.fulfilled.type]: (
-      state,
-      action: PayloadAction<string>
-    ) => {
+    [currencyExchange.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
       state.currencyExchange = action.payload;

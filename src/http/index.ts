@@ -32,10 +32,18 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get(`${API_URL}refresh`, {
-          withCredentials: true,
+        const token = JSON.parse(localStorage.getItem("refreshToken"));
+        const response = await axios.post(`${API_URL}refresh/`, {
+          refresh: token,
         });
-        localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem(
+          "accessToken",
+          JSON.stringify(response.data.access)
+        );
+        localStorage.setItem(
+          "refreshToken",
+          JSON.stringify(response.data.refresh)
+        );
         return $api.request(originalRequest);
       } catch (e) {
         console.log("НЕ АВТОРИЗОВАН");

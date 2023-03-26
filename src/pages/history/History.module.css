@@ -1,0 +1,145 @@
+.widthContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container {
+  /* display: flex; */
+
+  width: 100%;
+  min-height: 600px;
+  max-width: 100%;
+
+  margin-top: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #eaecf0;
+  padding: 26px;
+
+  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
+    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  border-radius: 24px;
+}
+
+.cardContainer {
+  height: 40px;
+  width: 300px;
+  background: #f5f7fa;
+  border-radius: 5px;
+  margin: 16px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardLeftContainer {
+  display: flex;
+  align-items: center;
+}
+
+.country {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 8px;
+}
+
+.cardNumber {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  color: #0f1011;
+  display: flex;
+  gap: 0 8px;
+  word-spacing: 4px;
+  margin-top: 4px;
+  margin-right: 8px;
+}
+
+.countryText {
+  order: 1;
+  font-size: 14px;
+  line-height: 22px;
+  color: #87919c;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardType {
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+}
+
+.titleHead {
+  font-family: "InterMedium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 42px;
+  color: #575757;
+  margin-bottom: 48px;
+}
+
+.titleLabel {
+  font-family: "InterMedium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 32px;
+  color: #575757;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.exchange {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 2fr;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #f4f5f7;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.exchangeItem {
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* font-size: 14px; */
+  font-family: "InterLight";
+}
+
+.exchangeImg {
+  margin-right: 8px;
+}
+
+.exchangeMedium {
+  font-family: "InterMedium";
+}
+
+.exchangeArrow {
+  margin: 0 auto;
+  font-size: 20px;
+  color: #8b8b8b;
+}
+
+.smallText {
+  color: #667085;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  padding-right: 8px;
+}

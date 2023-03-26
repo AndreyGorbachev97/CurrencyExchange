@@ -1,18 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  auth,
-  checkAuth,
-  fetchPriceCurrency,
-  getCards,
-  logout,
-  register,
-} from "../ActionCreators";
-import { IPriceCurrency } from "../../../models/IPriceCurrency";
-import jwtDecode from "jwt-decode";
+import { getCards } from "../ActionCreators";
 import { ICard } from "../../../models/ICard";
 
 interface cardState {
-  cards: any;
+  cards: ICard[];
   isLoading: boolean;
   error: string;
 }

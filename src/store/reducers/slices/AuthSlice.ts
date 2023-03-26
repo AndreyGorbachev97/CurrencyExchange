@@ -21,15 +21,23 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [logout.fulfilled.type]: (state, action: PayloadAction<any>) => {
+    [logout.fulfilled.type]: (state) => {
       state.isLoading = false;
       state.error = "";
-      state.auth = action.payload;
+      state.auth = {};
+      state.user = {};
     },
     [checkAuth.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;
       state.error = "";
       state.user = action.payload.user;
+    },
+    [checkAuth.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [checkAuth.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
     [register.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.isLoading = false;

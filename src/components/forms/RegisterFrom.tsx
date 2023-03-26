@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Input, Segmented, Button, Checkbox, Form, Alert, Spin } from "antd";
+import { Input, Button, Form, Alert, Spin, notification } from "antd";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { register } from "../../store/reducers/ActionCreators";
 import classes from "./Form.module.css";
@@ -8,7 +8,9 @@ type propType = {
   handleCancel: () => void;
 };
 
-const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
+const RegisterFrom: React.FC<Partial<propType>> = ({
+  handleCancel,
+}: propType) => {
   const dispatch = useAppDispatch();
   const {
     register: data,
@@ -16,19 +18,15 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
     error,
   } = useAppSelector((state) => state.registerReducer);
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-    dispatch(register(values));
+  const onFinish = async (values: any) => {
+    await dispatch(register(values));
+    notification.info({
+      message: "Обратите внимание!",
+      description:
+        'Письмо для подтверждения профиля отправлено на указанную электронную почту. Если оно не отображается, проверьте папку "Спам"',
+      duration: 10,
+    });
   };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  useEffect(() => {
-    console.log("DATA", data);
-    data && handleCancel();
-  }, [data]);
 
   return (
     <div>
@@ -36,7 +34,6 @@ const RegisterFrom: React.FC = ({ handleCancel }: propType) => {
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         layout="vertical"
         autoComplete="off"
       >

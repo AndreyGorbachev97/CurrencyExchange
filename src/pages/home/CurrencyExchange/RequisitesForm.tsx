@@ -28,6 +28,8 @@ const RequisitesForm: React.FC<propType> = ({
 
   const [form] = Form.useForm();
 
+  const [cardNumber, walletNumber] = form.getFieldsValue();
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -36,6 +38,7 @@ const RequisitesForm: React.FC<propType> = ({
 
   // todo reduce временно
   const optionsCard = cards
+    .filter(item => item.is_validation)
     .reduce((acc: ICard[], card: ICard) => {
       if (!acc.find((el) => el.cardNumber === card.cardNumber)) {
         acc.push(card);
@@ -49,11 +52,7 @@ const RequisitesForm: React.FC<propType> = ({
 
   return (
     <div style={{ width: "90%" }}>
-      <Form
-        form={form}
-        layout="vertical"
-        autoComplete="off"
-      >
+      <Form form={form} layout="vertical" autoComplete="off">
         <Form.Item
           name="cardNumber"
           rules={[{ required: true, message: "Выберите карту" }]}
