@@ -34,6 +34,7 @@ const Accepted: React.FC = ({ transaction }: propType) => {
 		transaction.id && dispatch(approvePaymentTransaction(transaction.id))
 	}
 
+	console.log('transaction', transaction)
 	return (
 		<div>
 			<p>
@@ -60,7 +61,7 @@ const Accepted: React.FC = ({ transaction }: propType) => {
 					</div>
 				) : (
 					<span className={classes.exchangeBold}>
-						{`${cardMskForStr(transaction.target_user)}`}
+						{`${cardMskForStr(transaction.cardNumber.toString())}`}
 					</span>
 				)}
 				{`. `}
