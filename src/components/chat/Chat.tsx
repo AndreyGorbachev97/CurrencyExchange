@@ -26,8 +26,6 @@ const Chat: React.FC = () => {
 	const [msg, setMsg] = useState('')
 
 	const { auth, user } = useAppSelector(state => state.authReducer)
-	console.log('auth', auth)
-	console.log('user', user)
 	const fieldRef = useRef<HTMLInputElement>(null)
 
 	const { data, isLoading, error } = chatAPI.useFetchChatQuery(chatId, {

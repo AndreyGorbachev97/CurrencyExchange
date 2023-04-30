@@ -60,7 +60,6 @@ const RouterApp = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log('checkAuth', checkAuth)
 		setIsCheckAuth(prev => !prev)
 		dispatch(checkAuth())
 	}, [auth])
@@ -73,9 +72,6 @@ const RouterApp = () => {
 		}
 	}, [isWideWidth])
 
-	console.log('user', user)
-	console.log('auth', auth)
-	console.log('isLoading', isLoading)
 	return (
 		<div>
 			<Header />
